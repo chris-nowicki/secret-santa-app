@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
+  password     String
+  firstName    String
+  lastName     String
+  avatar       String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  role         Role         @default(USER)
+  UserStatus   UserStatus[]
+  SecretSanta  Pairings[]   @relation("SecretSanta")
+  SantasPerson Pairings[]   @relation("SantasPerson")
+  FromUser     ThankYou[]   @relation("FromUser")
+  ToUser       ThankYou[]   @relation("ToUser")
+  WishList     WishList[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model UserStatus {
+  id      Int          @id @default(autoincrement())
+  eventId Int
+  event   Event        @relation(fields: [eventId], references: [id])
+  userId  Int
+  user    Users        @relation(fields: [userId], references: [id])
+  status  InviteStatus @default(INVITED)
+}
+
+enum InviteStatus {
+  INVITED
+  DECLINED
+  ACCEPTED
+}
+
+model Event {
+  id           Int        @id @default(autoincrement())
+  name         String
+  date         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  sendReminder Boolean
+  UserStatus  UserStatus[]
+  Pairings     Pairings[]
+  ThankYou     ThankYou[]
+  WishList     WishList[]
+}
+
+model Pairings {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  santaId   Int
+  santa     Users    @relation("SecretSanta", fields: [santaId], references: [id])
+  personId  Int
+  person    Users    @relation("SantasPerson", fields: [personId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ThankYou {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  userId    Int
+  fromUser  Users    @relation("FromUser", fields: [userId], references: [id])
+  toUserId  Int
+  toUser    Users    @relation("ToUser", fields: [toUserId], references: [id])
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model WishList {
+  id              Int      @id @default(autoincrement())
+  name            String
+  url             String
+  userId          Int
+  user            Users    @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  order           Int
+  eventId         Int
+  event           Event    @relation(fields: [eventId], references: [id])
+  siteImage       String
+  siteTitle       String
+  siteDescription String
+}
