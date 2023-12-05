@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 z-0 w-full bg-acadia py-[72px] text-center dark:bg-blackPearl">
+    <footer className="fixed bottom-0 -z-10 w-full bg-acadia py-[72px] text-center dark:bg-blackPearl overflow-hidden">
       <img
         src="/images/logo__secret-santa--small.svg"
         alt="Secret Santa"

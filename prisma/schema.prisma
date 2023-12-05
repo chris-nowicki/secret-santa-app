@@ -2,101 +2,118 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["public", "auth"]
 }
 
-model Users {
-  id           Int          @id @default(autoincrement())
-  email        String       @unique
-  password     String 
-  firstName    String
-  lastName     String
-  avatar       String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  role         Role         @default(USER)
-  UserStatus   UserStatus[]
-  SecretSanta  Pairings[]   @relation("SecretSanta")
-  SantasPerson Pairings[]   @relation("SantasPerson")
-  FromUser     ThankYou[]   @relation("FromUser")
-  ToUser       ThankYou[]   @relation("ToUser")
-  WishList     WishList[]
+model profiles {
+  id         String       @id @db.Uuid
+  email      String       @unique
+  firstName  String?
+  lastName   String?
+  avatar     String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  role       role         @default(USER)
+  userStatus userStatus[]
+  santa      pairings[]   @relation("SecretSanta")
+  person     pairings[]   @relation("SantasPerson")
+  fromUser   thankYou[]   @relation("FromUser")
+  toUser     thankYou[]   @relation("ToUser")
+  wishList   wishList[]
+
+  @@schema("public")
 }
 
-enum Role {
+enum role {
   USER
   ADMIN
+
+  @@schema("public")
 }
 
-model UserStatus {
+model userStatus {
   id      Int          @id @default(autoincrement())
-  eventId Int
-  event   Event        @relation(fields: [eventId], references: [id])
-  userId  Int
-  user    Users        @relation(fields: [userId], references: [id])
-  status  InviteStatus @default(INVITED)
+  eventId String
+  event   event        @relation(fields: [eventId], references: [id])
+  userId  String       @db.Uuid
+  user    profiles     @relation(fields: [userId], references: [id])
+  status  inviteStatus @default(INVITED)
+
+  @@schema("public")
 }
 
-enum InviteStatus {
+enum inviteStatus {
   INVITED
   DECLINED
   ACCEPTED
+
+  @@schema("public")
 }
 
-model Event {
-  id           Int        @id @default(autoincrement())
+model event {
+  id           String       @id @default(uuid())
   name         String
   date         DateTime
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   sendReminder Boolean
-  UserStatus  UserStatus[]
-  Pairings     Pairings[]
-  ThankYou     ThankYou[]
-  WishList     WishList[]
+  userStatus   userStatus[]
+  pairings     pairings[]
+  thankYou     thankYou[]
+  wishList     wishList[]
+
+  @@schema("public")
 }
 
-model Pairings {
+model pairings {
   id        Int      @id @default(autoincrement())
-  eventId   Int
-  event     Event    @relation(fields: [eventId], references: [id])
-  santaId   Int
-  santa     Users    @relation("SecretSanta", fields: [santaId], references: [id])
-  personId  Int
-  person    Users    @relation("SantasPerson", fields: [personId], references: [id])
+  eventId   String
+  event     event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  santaId   String   @db.Uuid
+  santa     profiles @relation("SecretSanta", fields: [santaId], references: [id])
+  personId  String   @db.Uuid
+  person    profiles @relation("SantasPerson", fields: [personId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@schema("public")
 }
 
-model ThankYou {
+model thankYou {
   id        Int      @id @default(autoincrement())
-  eventId   Int
-  event     Event    @relation(fields: [eventId], references: [id])
-  userId    Int
-  fromUser  Users    @relation("FromUser", fields: [userId], references: [id])
-  toUserId  Int
-  toUser    Users    @relation("ToUser", fields: [toUserId], references: [id])
+  eventId   String
+  event     event    @relation(fields: [eventId], references: [id])
+  userId    String   @db.Uuid
+  user      profiles @relation("FromUser", fields: [userId], references: [id])
+  toUserId  String   @db.Uuid
+  toUser    profiles @relation("ToUser", fields: [toUserId], references: [id])
   message   String
   createdAt DateTime @default(now())
+
+  @@schema("public")
 }
 
-model WishList {
+model wishList {
   id              Int      @id @default(autoincrement())
   name            String
   url             String
-  userId          Int
-  user            Users    @relation(fields: [userId], references: [id])
+  userId          String   @db.Uuid
+  user            profiles @relation(fields: [userId], references: [id])
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   order           Int
-  eventId         Int
-  event           Event    @relation(fields: [eventId], references: [id])
+  eventId         String
+  event           event    @relation(fields: [eventId], references: [id])
   siteImage       String
   siteTitle       String
   siteDescription String
+
+  @@schema("public")
 }

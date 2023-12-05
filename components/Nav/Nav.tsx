@@ -1,6 +1,6 @@
 const Nav = () => {
   return (
-    <div className="flex h-screen w-[460px] flex-col justify-between bg-supernova px-12 pb-12 pt-[160px]">
+    <div className="bg-supernova flex h-screen w-[460px] flex-col justify-between px-12 pb-12 pt-[160px]">
       <nav className="top-nav">
         <ul>
           <li>
@@ -16,7 +16,7 @@ const Nav = () => {
       </nav>
 
       <nav className="bottom-nav">
-        <div className="mb-2 font-condensed text-5xl uppercase text-spanishGreen">
+        <div className="font-condensed text-spanishGreen mb-2 text-5xl uppercase">
           Past Events
         </div>
         <ul>

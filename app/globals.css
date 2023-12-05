@@ -1,4 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Bebas+Neue&family=Inter:wght@400;500;700&family=Kalam:wght@700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .label,
+  label {
+    @apply font-handwriting text-xl uppercase tracking-tighter;
+  }
+
+  label:has(+ textarea:placeholder-shown),
+  label:has(+ input:placeholder-shown) {
+    @apply pointer-events-none left-8 top-8 text-3xl transition-all duration-300;
+  }
+
+  label:has(+ textarea),
+  label:has(+ textarea:focus),
+  label:has(+ input),
+  label:has(+ input:focus) {
+    @apply absolute left-2 top-2 text-xl;
+  }
+
+  textarea,
+  input[type='password'],
+  input[type='url'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='email'],
+  input[type='text'] {
+    @apply h-[100px] w-full px-7 font-sans text-2xl;
+  }
+
+  textarea {
+    @apply h-[400px] pt-14;
+  }
+
+  input.short {
+    @apply h-[52px] text-lg outline-none;
+  }
+
+  /* invalid label */
+  label:has(+ input:invalid:not(:placeholder-shown)) {
+    @apply text-white;
+  }
+
+  /* invalid input */
+  input:invalid:not(:placeholder-shown) {
+    @apply bg-orangeRed border-fireEngineRed;
+  }
+
+  /* checkbox */
+  input[type='checkbox'] {
+    @apply hidden;
+  }
+
+  input[type='checkbox'] + label {
+    @apply font-handwriting flex cursor-pointer items-center gap-4 text-3xl uppercase;
+  }
+
+  input[type='checkbox'] + label:before {
+    @apply bg-unchecked relative -top-1 block h-10 w-10 content-[''];
+  }
+
+  input[type='checkbox']:checked + label:before {
+    @apply bg-checked relative -top-1 block h-10 w-10 content-[''];
+  }
+
+  button[type='submit'] {
+    @apply bg-supernova font-handwriting w-full rounded-full py-5 text-3xl uppercase text-black;
+  }
+
+  button.medium,
+  button[type='submit'].medium {
+    @apply h-12 px-8 font-sans text-xl font-bold uppercase tracking-tight;
+  }
+
+  a.button.small,
+  button.small,
+  button[type='submit'].small {
+    @apply inline-block h-8 px-4 text-sm font-bold uppercase;
+  }
+
+  main {
+    @apply z-10 overflow-y-scroll overflow-x-hidden mb-[369px];
+  }
+
+  svg {
+    @apply fill-current;
+  }
+}
+
+@layer components {
+  .bg-auth {
+    @apply bg-silverTree dark:bg-nileBlue min-h-screen w-screen bg-[length:1440px_auto] bg-[center_top] bg-no-repeat min-[1440px]:bg-[length:100%_auto];
+  }
+
+  .bg-interior {
+    @apply bg-silverTree dark:bg-nileBlue grid min-h-screen w-screen grid-cols-12 gap-x-5 bg-no-repeat;
+  }
+
+  .page-title {
+    @apply font-condensed mb-5 text-[116px] uppercase leading-none text-white;
+  }
+
+  .field {
+    @apply mb-4;
+  }
+
+  .auth-form {
+    @apply mb-10;
+  }
+
+  .auth-links {
+    @apply text-center text-white;
+  }
+
+  .auth-links a {
+    @apply underline hover:no-underline;
+  }
+
+  .error-message {
+    @apply text-orangeRed block py-2;
+  }
+
+  .dropdown {
+    @apply relative left-6 top-6;
+  }
+
+  .dropdown:before {
+    content: '';
+    @apply absolute -top-[24px] left-[32px] border-[12px] border-transparent border-b-white;
+  }
+
+  .dropdown li {
+    @apply font-condensed flex items-center gap-x-3 text-3xl uppercase text-black;
+  }
+
+  .field {
+    @apply relative;
+  }
+
+  .indicator {
+    @apply center h-6 w-6 rounded-full border-2 border-white;
+  }
+
+  .with-rulers {
+    @apply flex items-center justify-center gap-7;
+  }
+
+  .with-rulers:before,
+  .with-rulers:after {
+    content: '';
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    @apply block h-[6px] w-[72px] bg-current;
+  }
+
+  /* RSVP Status */
+  .status-success {
+    @apply bg-spanishGreen text-spanishGreen;
+  }
+
+  .status-warning {
+    @apply bg-supernova text-supernova;
+  }
+
+  .status-error {
+    @apply bg-orangeRed text-orangeRed;
+  }
+
+  /* nav */
+  .top-nav li {
+    @apply font-condensed text-[72px] uppercase leading-none tracking-wide;
+  }
+
+  .top-nav li a {
+    @apply hover:text-orangeRed;
+  }
+
+  .bottom-nav ul {
+    @apply flex flex-col gap-3;
+  }
+
+  .bottom-nav ul a {
+    @apply hover:text-orangeRed;
+  }
+
+  .number-with-outline {
+    @apply font-script text-[130px] leading-none;
+  }
+}
+
+@layer utilties {
+  .center {
+    @apply flex items-center justify-center;
+  }
+
+  .outline-text {
+    -webkit-text-stroke-width: 20px;
+    -webkit-text-stroke-color: white;
+    @apply text-black;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}

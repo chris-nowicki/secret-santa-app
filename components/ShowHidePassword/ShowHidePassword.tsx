@@ -1,10 +1,8 @@
+'use client'
 import { useState } from 'react'
-
-import { Label, PasswordField, TextField } from '@redwoodjs/forms'
-
 import Icon from '../Icon/Icon'
 
-const ShowHidePassword = ({ name }) => {
+const ShowHidePassword = ({ name }: { name: string }) => {
   const [isPasswordShowing, setIsShowPasswordShowing] = useState(false)
 
   const toggleShowPassword = () => {
@@ -13,14 +11,13 @@ const ShowHidePassword = ({ name }) => {
 
   return (
     <div className="field relative">
-      <Label name={name}>Label</Label>
       {isPasswordShowing ? (
-        <PasswordField name={name} placeholder=" " />
+        <input type="text" name="password" placeholder="Password" />
       ) : (
-        <TextField name={name} placeholder=" " />
+        <input type="password" name="password" placeholder="Password" />
       )}
       <button className="absolute right-6 top-8" onClick={toggleShowPassword}>
-        {isPasswordShowing ? (
+        {!isPasswordShowing ? (
           <Icon id="eyeClosed" size={32} />
         ) : (
           <Icon id="eyeOpened" size={32} />
