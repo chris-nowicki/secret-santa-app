@@ -12,7 +12,7 @@ datasource db {
   schemas  = ["public", "auth"]
 }
 
-model profiles {
+model profile {
   id         String       @id @db.Uuid
   email      String       @unique
   firstName  String?
@@ -22,8 +22,8 @@ model profiles {
   updatedAt  DateTime     @updatedAt
   role       role         @default(USER)
   userStatus userStatus[]
-  santa      pairings[]   @relation("SecretSanta")
-  person     pairings[]   @relation("SantasPerson")
+  santa      pairing[]    @relation("SecretSanta")
+  person     pairing[]    @relation("SantasPerson")
   fromUser   thankYou[]   @relation("FromUser")
   toUser     thankYou[]   @relation("ToUser")
   wishList   wishList[]
@@ -40,10 +40,10 @@ enum role {
 
 model userStatus {
   id      Int          @id @default(autoincrement())
-  eventId String
-  event   event        @relation(fields: [eventId], references: [id])
+  eventId String       @db.Uuid
+  event   event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
   userId  String       @db.Uuid
-  user    profiles     @relation(fields: [userId], references: [id])
+  user    profile      @relation(fields: [userId], references: [id])
   status  inviteStatus @default(INVITED)
 
   @@schema("public")
@@ -58,28 +58,28 @@ enum inviteStatus {
 }
 
 model event {
-  id           String       @id @default(uuid())
+  id           String       @id @default(uuid()) @db.Uuid
   name         String
   date         DateTime
   createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  updatedAt    DateTime     @default(now())
   sendReminder Boolean
   userStatus   userStatus[]
-  pairings     pairings[]
+  pairing      pairing[]
   thankYou     thankYou[]
   wishList     wishList[]
 
   @@schema("public")
 }
 
-model pairings {
+model pairing {
   id        Int      @id @default(autoincrement())
-  eventId   String
+  eventId   String   @db.Uuid
   event     event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   santaId   String   @db.Uuid
-  santa     profiles @relation("SecretSanta", fields: [santaId], references: [id])
+  santa     profile  @relation("SecretSanta", fields: [santaId], references: [id])
   personId  String   @db.Uuid
-  person    profiles @relation("SantasPerson", fields: [personId], references: [id])
+  person    profile  @relation("SantasPerson", fields: [personId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -88,12 +88,12 @@ model pairings {
 
 model thankYou {
   id        Int      @id @default(autoincrement())
-  eventId   String
+  eventId   String   @db.Uuid
   event     event    @relation(fields: [eventId], references: [id])
   userId    String   @db.Uuid
-  user      profiles @relation("FromUser", fields: [userId], references: [id])
+  user      profile  @relation("FromUser", fields: [userId], references: [id])
   toUserId  String   @db.Uuid
-  toUser    profiles @relation("ToUser", fields: [toUserId], references: [id])
+  toUser    profile  @relation("ToUser", fields: [toUserId], references: [id])
   message   String
   createdAt DateTime @default(now())
 
@@ -105,11 +105,11 @@ model wishList {
   name            String
   url             String
   userId          String   @db.Uuid
-  user            profiles @relation(fields: [userId], references: [id])
+  user            profile  @relation(fields: [userId], references: [id])
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   order           Int
-  eventId         String
+  eventId         String   @db.Uuid
   event           event    @relation(fields: [eventId], references: [id])
   siteImage       String
   siteTitle       String

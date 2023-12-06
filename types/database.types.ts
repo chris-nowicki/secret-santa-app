@@ -54,10 +54,10 @@ export interface Database {
         Insert: {
           createdAt?: string
           date: string
-          id: string
+          id?: string
           name: string
           sendReminder: boolean
-          updatedAt: string
+          updatedAt?: string
         }
         Update: {
           createdAt?: string
@@ -69,7 +69,7 @@ export interface Database {
         }
         Relationships: []
       }
-      pairings: {
+      pairing: {
         Row: {
           createdAt: string
           eventId: string
@@ -96,29 +96,29 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "pairings_eventId_fkey"
+            foreignKeyName: "pairing_eventId_fkey"
             columns: ["eventId"]
             isOneToOne: false
             referencedRelation: "event"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "pairings_personId_fkey"
+            foreignKeyName: "pairing_personId_fkey"
             columns: ["personId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "pairings_santaId_fkey"
+            foreignKeyName: "pairing_santaId_fkey"
             columns: ["santaId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           }
         ]
       }
-      profiles: {
+      profile: {
         Row: {
           avatar: string | null
           createdAt: string
@@ -149,15 +149,7 @@ export interface Database {
           role?: Database["public"]["Enums"]["role"]
           updatedAt?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       thankYou: {
         Row: {
@@ -196,14 +188,14 @@ export interface Database {
             foreignKeyName: "thankYou_toUserId_fkey"
             columns: ["toUserId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "thankYou_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           }
         ]
@@ -239,7 +231,7 @@ export interface Database {
             foreignKeyName: "userStatus_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           }
         ]
@@ -296,7 +288,7 @@ export interface Database {
             foreignKeyName: "wishList_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           }
         ]

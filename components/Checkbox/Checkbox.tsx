@@ -1,12 +1,10 @@
-import { CheckboxField, Label } from '@redwoodjs/forms'
+import React from 'react'
 
-const Checkbox = ({ name }) => {
+export default function Checkbox({ name }: { name: string }) {
   return (
-    <div className="field">
-      <CheckboxField name={name} />
-      <Label name={name}>Send out a reminder for an event</Label>
+    <div>
+      <input type="checkbox" name={name} id={name} />
+      <label htmlFor={name}>Send out a reminder for an event</label>
     </div>
   )
 }
-
-export default Checkbox

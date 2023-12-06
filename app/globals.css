@@ -27,6 +27,7 @@
   input[type='url'],
   input[type='number'],
   input[type='tel'],
+  input[type='date'],
   input[type='email'],
   input[type='text'] {
     @apply h-[100px] w-full px-7 font-sans text-2xl;
@@ -47,7 +48,7 @@
 
   /* invalid input */
   input:invalid:not(:placeholder-shown) {
-    @apply bg-orangeRed border-fireEngineRed;
+    @apply border-fireEngineRed bg-orangeRed;
   }
 
   /* checkbox */
@@ -56,19 +57,19 @@
   }
 
   input[type='checkbox'] + label {
-    @apply font-handwriting flex cursor-pointer items-center gap-4 text-3xl uppercase;
+    @apply flex cursor-pointer items-center gap-4 font-handwriting text-3xl uppercase;
   }
 
   input[type='checkbox'] + label:before {
-    @apply bg-unchecked relative -top-1 block h-10 w-10 content-[''];
+    @apply relative -top-1 block h-10 w-10 bg-unchecked content-[''];
   }
 
   input[type='checkbox']:checked + label:before {
-    @apply bg-checked relative -top-1 block h-10 w-10 content-[''];
+    @apply relative -top-1 block h-10 w-10 bg-checked content-[''];
   }
 
   button[type='submit'] {
-    @apply bg-supernova font-handwriting w-full rounded-full py-5 text-3xl uppercase text-black;
+    @apply w-full rounded-full bg-supernova py-5 font-handwriting text-3xl uppercase text-black;
   }
 
   button.medium,
@@ -83,7 +84,7 @@
   }
 
   main {
-    @apply z-10 overflow-y-scroll overflow-x-hidden mb-[369px];
+    @apply z-10 mb-[369px] overflow-x-hidden overflow-y-scroll;
   }
 
   svg {
@@ -93,15 +94,15 @@
 
 @layer components {
   .bg-auth {
-    @apply bg-silverTree dark:bg-nileBlue min-h-screen w-screen bg-[length:1440px_auto] bg-[center_top] bg-no-repeat min-[1440px]:bg-[length:100%_auto];
+    @apply min-h-screen w-screen bg-silverTree bg-[length:1440px_auto] bg-[center_top] bg-no-repeat dark:bg-nileBlue min-[1440px]:bg-[length:100%_auto];
   }
 
   .bg-interior {
-    @apply bg-silverTree dark:bg-nileBlue grid min-h-screen w-screen grid-cols-12 gap-x-5 bg-no-repeat;
+    @apply grid min-h-screen w-screen grid-cols-12 gap-x-5 bg-silverTree bg-no-repeat dark:bg-nileBlue;
   }
 
   .page-title {
-    @apply font-condensed mb-5 text-[116px] uppercase leading-none text-white;
+    @apply mb-5 font-condensed text-[116px] uppercase leading-none text-white;
   }
 
   .field {
@@ -121,7 +122,7 @@
   }
 
   .error-message {
-    @apply text-orangeRed block py-2;
+    @apply block py-2 text-orangeRed;
   }
 
   .dropdown {
@@ -134,7 +135,7 @@
   }
 
   .dropdown li {
-    @apply font-condensed flex items-center gap-x-3 text-3xl uppercase text-black;
+    @apply flex items-center gap-x-3 font-condensed text-3xl uppercase text-black;
   }
 
   .field {
