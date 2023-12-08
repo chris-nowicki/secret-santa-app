@@ -1,6 +1,17 @@
-const Nav = () => {
+'use client'
+import clsx from 'clsx'
+import { useSecretSanta } from '@/context/SecretSantaContext'
+
+export default function Nav() {
+  const { showSideMenu } = useSecretSanta()
+
   return (
-    <div className="bg-supernova flex h-screen w-[460px] flex-col justify-between px-12 pb-12 pt-[160px]">
+    <div
+      className={clsx(
+        'l-0 fixed top-0 z-20 h-screen w-[460px] flex-col justify-between bg-supernova px-12 pb-12 pt-[160px]',
+        showSideMenu ? 'flex' : 'hidden'
+      )}
+    >
       <nav className="top-nav">
         <ul>
           <li>
@@ -16,7 +27,7 @@ const Nav = () => {
       </nav>
 
       <nav className="bottom-nav">
-        <div className="font-condensed text-spanishGreen mb-2 text-5xl uppercase">
+        <div className="mb-2 font-condensed text-5xl uppercase text-spanishGreen">
           Past Events
         </div>
         <ul>
@@ -37,5 +48,3 @@ const Nav = () => {
     </div>
   )
 }
-
-export default Nav

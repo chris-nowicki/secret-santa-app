@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-silverTree`}>
-        <main className="bg-auth z-99">
+        <main className="z-99 bg-auth">
           <img
             src="/images/logo__secret-santa.svg"
             alt="Secret Santa"

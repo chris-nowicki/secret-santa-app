@@ -24,9 +24,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="absolute left-0 top-2 flex gap-2">
       <button
-        className="mt-6 rounded-full bg-white px-4 py-2 text-xl"
+        className="text-xl"
         onClick={handleSignOut}
       >
         Sign out

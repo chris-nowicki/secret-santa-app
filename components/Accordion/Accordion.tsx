@@ -1,10 +1,15 @@
+'use client'
 import { useState } from 'react'
-
 import { AnimatePresence, motion } from 'framer-motion'
-
 import Icon from '../Icon/Icon'
 
-const Accordion = ({ children, defaultIsShowing = false, heading }) => {
+type Props = {
+  children: React.ReactNode
+  defaultIsShowing?: boolean
+  heading?: string
+}
+
+const Accordion = ({ children, defaultIsShowing = false, heading }: Props) => {
   const [isShowing, setIsShowing] = useState(defaultIsShowing)
 
   const toggleShowing = () => {
@@ -29,6 +34,7 @@ const Accordion = ({ children, defaultIsShowing = false, heading }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            className='relative'
           >
             {children}
           </motion.div>

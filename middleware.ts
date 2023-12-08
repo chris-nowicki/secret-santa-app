@@ -14,7 +14,18 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url))
   }
 
-  return res
+  if (session && req.nextUrl.pathname === '/dashboard') {
+    const { data } = await supabase
+      .from('userStatus')
+      .select(`id, status, event(*)`)
+      .eq('userId', session.user.id)
+
+    if (data && data.length > 0) {
+      return NextResponse.redirect(new URL('/group/invite', req.url))
+    } else {
+      return NextResponse.redirect(new URL('/event/new', req.url))
+    }
+  }
 }
 
 export const config = {

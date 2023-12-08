@@ -21,7 +21,7 @@ export const createNewEvent = async (formData: FormData) => {
       date: date as string,
       sendReminder: checked === 'on',
     })
-    .select('id')
+    .select('*')
 
   if (data) {
     await supabase.from('userStatus').insert({
@@ -30,7 +30,18 @@ export const createNewEvent = async (formData: FormData) => {
       status: 'ACCEPTED',
     })
 
-    return
+    await supabase
+      .from('profile')
+      .update({
+        role: 'ADMIN',
+      })
+      .eq('userId', userId as string)
+
+    return {
+      id: data[0].id,
+      name: data[0].name,
+      date: data[0].date,
+    }
   }
 
   error && console.error(error)

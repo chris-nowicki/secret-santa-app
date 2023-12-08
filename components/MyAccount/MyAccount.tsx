@@ -1,19 +1,27 @@
 import { useState } from 'react'
-
 import { AnimatePresence, motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-const MyAccount = () => {
+const MyAccount = ({ name }: { name: string | null }) => {
   const [isDropdownShowing, setIsDropdownShowing] = useState(false)
+  const supabase = createClientComponentClient()
+  const router = useRouter()
 
   const toggleDropdown = () => {
     setIsDropdownShowing((prevValue) => !prevValue)
   }
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.refresh()
+  }
+
   return (
-    <div className="relative dark:text-white">
+    <div className="relative dark:text-white mr-6">
       <button className="flex items-center gap-2" onClick={toggleDropdown}>
         <motion.div animate={{ rotate: isDropdownShowing ? 180 : 0 }}>
           <Icon id="chevron" />
@@ -25,7 +33,7 @@ const MyAccount = () => {
         <div className="text-left">
           <div className="text-sm">Logged in as</div>
           <div className="text-lg">
-            <strong>Amy Dutton</strong>
+            <strong>{name}</strong>
           </div>
         </div>
       </button>
@@ -36,7 +44,7 @@ const MyAccount = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="dropdown inline-block bg-white py-5 pl-4 pr-5"
+            className="dropdown z-10 inline-block bg-white py-5 pl-4 pr-5"
           >
             <ul className="flex flex-col gap-2">
               <li>
@@ -55,7 +63,7 @@ const MyAccount = () => {
                 <div className="text-pastelMagenta">
                   <Icon size={32} id="logout" />
                 </div>
-                Logout
+                <button onClick={handleSignOut}>Logout</button>
               </li>
             </ul>
           </motion.nav>

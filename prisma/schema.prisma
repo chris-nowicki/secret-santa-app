@@ -15,8 +15,7 @@ datasource db {
 model profile {
   id         String       @id @db.Uuid
   email      String       @unique
-  firstName  String?
-  lastName   String?
+  name       String
   avatar     String?
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt

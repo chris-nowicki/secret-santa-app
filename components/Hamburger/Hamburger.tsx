@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 
 interface HamburgerProps {
@@ -14,7 +15,7 @@ const Hamburger = ({ handleClick }: HamburgerProps) => {
 
   return (
     <button
-      className="inline-flex h-[58px] w-[68px] flex-col items-center justify-center bg-supernova"
+      className="relative ml-4 inline-flex h-[58px] w-[68px] flex-col items-center justify-center bg-supernova"
       onClick={toggleNav}
     >
       <div

@@ -4,7 +4,7 @@ import Checkbox from '@/components/Checkbox/Checkbox'
 import { createNewEvent } from '@/actions/createNewEvent'
 import { redirect } from 'next/navigation'
 
-export default async function NewEvent() {
+export default function NewEvent() {
   return (
     <div className="flex w-full flex-col">
       <HeaderWithRulers className="mb-8 text-white" heading="NEW GROUP" />

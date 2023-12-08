@@ -14,7 +14,7 @@ const RoundButton = ({ handleClick, status }: RoundButtonProps) => {
     <button
       className={`h-16 w-16 rounded-full status-${status} center border-2 border-white  ${
         status === 'error' ? 'rotate-45' : ''
-      } ${status === 'warning' ? 'text-black' : 'text-white'}`}
+      } ${status === 'warning' ? 'bg-supernova text-black' : 'text-white'}`}
       onClick={onClick}
     >
       <Icon id="plus" />
