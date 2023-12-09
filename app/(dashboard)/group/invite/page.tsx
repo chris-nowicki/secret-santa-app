@@ -1,12 +1,12 @@
 'use client'
-import InviteGroup from '@/components/InviteGroup/InviteGroup'
-import Icon from '@/components/Icon/Icon'
-import Button from '@/components/Button/Button'
 import { countdown } from '@/utils/countdown'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { QueryData } from '@supabase/supabase-js'
+import InviteGroup from '@/components/InviteGroup/InviteGroup'
+import Icon from '@/components/Icon/Icon'
+import Button from '@/components/Button/Button'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
 import EditAccount from '@/components/EditAccount/EditAccount'
@@ -33,7 +33,7 @@ export default function GroupInvite() {
 
     if (data && data[0].event) {
       const event = data[0].event
-      // @ts-ignore
+
       setEvent({
         // @ts-ignore
         id: event.id,
