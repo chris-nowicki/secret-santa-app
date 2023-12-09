@@ -13,7 +13,9 @@ export const createNewEvent = async (formData: FormData) => {
   const date = formData.get('eventDate')
   const checked = formData.get('sendReminder')
   const userId = session?.user.id
+  let eventId
 
+  // create new event in event table
   const { data, error } = await supabase
     .from('event')
     .insert({
@@ -21,28 +23,28 @@ export const createNewEvent = async (formData: FormData) => {
       date: date as string,
       sendReminder: checked === 'on',
     })
-    .select('*')
+    .select()
 
-  if (data) {
+  // update userStatus table with new event owner
+  if (data && data.length > 0) {
+    eventId = data[0].id
+
     await supabase.from('userStatus').insert({
       userId: userId as string,
-      eventId: data[0].id as string,
+      eventId: eventId as string,
       status: 'ACCEPTED',
     })
-
-    await supabase
-      .from('profile')
-      .update({
-        role: 'ADMIN',
-      })
-      .eq('userId', userId as string)
-
-    return {
-      id: data[0].id,
-      name: data[0].name,
-      date: data[0].date,
-    }
+  } else {
+    error && console.error(error)
   }
 
-  error && console.error(error)
+  // Update user role to ADMIN from profile table
+  await supabase
+    .from('profile')
+    .update({
+      role: 'ADMIN',
+    })
+    .eq('id', userId as string)
+
+  return
 }

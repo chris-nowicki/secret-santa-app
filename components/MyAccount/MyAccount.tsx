@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-
+import { useSecretSanta } from '@/context/SecretSantaContext'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -10,6 +10,7 @@ const MyAccount = ({ name }: { name: string | null }) => {
   const [isDropdownShowing, setIsDropdownShowing] = useState(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
+  const { handleAside } = useSecretSanta()
 
   const toggleDropdown = () => {
     setIsDropdownShowing((prevValue) => !prevValue)
@@ -21,7 +22,7 @@ const MyAccount = ({ name }: { name: string | null }) => {
   }
 
   return (
-    <div className="relative dark:text-white mr-6">
+    <div className="relative mr-6 dark:text-white">
       <button className="flex items-center gap-2" onClick={toggleDropdown}>
         <motion.div animate={{ rotate: isDropdownShowing ? 180 : 0 }}>
           <Icon id="chevron" />
@@ -51,7 +52,14 @@ const MyAccount = ({ name }: { name: string | null }) => {
                 <div className="text-pastelMagenta">
                   <Icon size={32} id="user" />
                 </div>
-                My Account
+                <button
+                  onClick={() => {
+                    handleAside('myAccount')
+                    toggleDropdown()
+                  }}
+                >
+                  My Account
+                </button>
               </li>
               <li>
                 <div className="text-pastelMagenta">

@@ -1,8 +1,17 @@
 'use client'
 import { useState } from 'react'
 import Icon from '../Icon/Icon'
+import clsx from 'clsx'
 
-const ShowHidePassword = ({ name }: { name: string }) => {
+const ShowHidePassword = ({
+  name,
+  custom = false,
+  tabIndex,
+}: {
+  name?: string
+  custom?: boolean
+  tabIndex?: number
+}) => {
   const [isPasswordShowing, setIsShowPasswordShowing] = useState(false)
 
   const toggleShowPassword = () => {
@@ -10,13 +19,39 @@ const ShowHidePassword = ({ name }: { name: string }) => {
   }
 
   return (
-    <div className="field relative">
+    <div className="field">
+      <span
+        className={clsx(
+          custom
+            ? 'absolute left-8 top-[34px] font-handwriting text-3xl uppercase'
+            : 'hidden'
+        )}
+      >
+        password
+      </span>
       {isPasswordShowing ? (
-        <input type="text" name="password" placeholder="Password" />
+        <input
+          type="text"
+          name="password"
+          placeholder={custom ? '' : 'Password'}
+          tabIndex={tabIndex}
+          className={clsx(custom ? 'customAccount' : '')}
+        />
       ) : (
-        <input type="password" name="password" placeholder="Password" />
+        <input
+          type="password"
+          name="password"
+          placeholder={custom ? '' : 'Password'}
+          tabIndex={tabIndex}
+          className={clsx(custom ? 'customAccount' : '')}
+        />
       )}
-      <button className="absolute right-6 top-8" onClick={toggleShowPassword}>
+      <button
+        type="button"
+        className="absolute right-6 top-8"
+        onClick={() => setIsShowPasswordShowing((prevValue) => !prevValue)}
+        tabIndex={-1}
+      >
         {!isPasswordShowing ? (
           <Icon id="eyeClosed" size={32} />
         ) : (

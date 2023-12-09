@@ -14,12 +14,12 @@ datasource db {
 
 model profile {
   id         String       @id @db.Uuid
-  email      String       @unique
+  email      String       @unique @db.VarChar(255)
   name       String
   avatar     String?
+  role       role         @default(USER)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  role       role         @default(USER)
   userStatus userStatus[]
   santa      pairing[]    @relation("SecretSanta")
   person     pairing[]    @relation("SantasPerson")

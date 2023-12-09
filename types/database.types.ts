@@ -1,6 +1,4 @@
-Need to install the following packages:
-  supabase@1.115.5
-Ok to proceed? (y) export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -125,9 +123,8 @@ export interface Database {
           avatar: string | null
           createdAt: string
           email: string
-          firstName: string | null
           id: string
-          lastName: string | null
+          name: string
           role: Database["public"]["Enums"]["role"]
           updatedAt: string
         }
@@ -135,9 +132,8 @@ export interface Database {
           avatar?: string | null
           createdAt?: string
           email: string
-          firstName?: string | null
           id: string
-          lastName?: string | null
+          name: string
           role?: Database["public"]["Enums"]["role"]
           updatedAt?: string
         }
@@ -145,13 +141,20 @@ export interface Database {
           avatar?: string | null
           createdAt?: string
           email?: string
-          firstName?: string | null
           id?: string
-          lastName?: string | null
+          name?: string
           role?: Database["public"]["Enums"]["role"]
           updatedAt?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profile_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       thankYou: {
         Row: {

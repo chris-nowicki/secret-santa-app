@@ -2,14 +2,12 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { RedirectType, useRouter } from 'next/navigation'
+import { RedirectType } from 'next/navigation'
 import { redirect } from 'next/navigation'
 
 export default function Dashboard() {
   const supabase = createClientComponentClient()
-  const { user, getEvent } = useSecretSanta()
-  const router = useRouter()
+  const { user } = useSecretSanta()
 
   const handleCheckEvent = async () => {
     const { data, error } = await supabase

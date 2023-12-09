@@ -4,10 +4,12 @@ export default function Checkbox({
   name,
   checked,
   onChange,
+  className,
 }: {
   name: string
   checked?: boolean
   onChange?: (e: any) => void
+  className?: string
 }) {
   return (
     <div>
@@ -18,7 +20,9 @@ export default function Checkbox({
         checked={checked}
         onChange={onChange}
       />
-      <label htmlFor={name}>Send out a reminder for an event</label>
+      <label htmlFor={name} className={className}>
+        Send out a reminder for an event
+      </label>
     </div>
   )
 }

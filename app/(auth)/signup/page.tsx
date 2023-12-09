@@ -23,32 +23,36 @@ export default async function Home() {
     'use server'
     const email = formData.get('email')
     const password = formData.get('password')
-    const firstName = formData.get('firstName')
+    const name = formData.get('name')
     const supabase = createServerActionClient<Database>({ cookies })
 
     if (!email || !password) {
       return
     }
 
-    await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: email as string,
       password: password as string,
       options: {
         data: {
-          firstName: firstName,
+          name: name,
         },
       },
     })
+
+    console.log(data, error)
   }
 
   return (
     <div className="flex w-full flex-col">
       <HeaderWithRulers className="mb-8 text-white" heading="SIGN UP" />
       <form action={handleSignUp} className="flex flex-col gap-4">
-        <input type="text" name="firstName" placeholder="First Name" />
-        <input type="text" name="email" placeholder="Email" />
-        <ShowHidePassword name="password" />
-        <button type="submit">Submit</button>
+        <input type="text" name="name" placeholder="Name" tabIndex={1} />
+        <input type="text" name="email" placeholder="Email" tabIndex={2} />
+        <ShowHidePassword name="password" tabIndex={3} />
+        <button type="submit" tabIndex={4}>
+          Submit
+        </button>
       </form>
       <Link href="/" className="my-4 w-full text-center text-xl underline">
         Need to Login?

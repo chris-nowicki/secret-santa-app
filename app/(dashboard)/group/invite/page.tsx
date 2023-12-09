@@ -9,16 +9,13 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { QueryData } from '@supabase/supabase-js'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
+import EditAccount from '@/components/EditAccount/EditAccount'
 
 export default function GroupInvite() {
   const [loading, setLoading] = useState(true)
-  const { user, event, setEvent, setAside } = useSecretSanta()
+  const { user, event, setEvent, handleAside } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClientComponentClient()
-
-  const handleAside = async () => {
-    setAside(true)
-  }
 
   const handleClick = async () => {
     console.log('clicked')
@@ -66,6 +63,7 @@ export default function GroupInvite() {
         <div className="mt-[90px] flex w-full">
           <Aside>
             <EditEvent />
+            <EditAccount />
           </Aside>
           <div className="flex w-full flex-col pr-12">
             <span className="-mb-10 ml-5 font-handwriting text-[31.5px] uppercase text-white">
@@ -76,7 +74,7 @@ export default function GroupInvite() {
                 {event.name}
               </h1>
               <div className="flex items-center gap-2">
-                <button onClick={handleAside}>
+                <button onClick={() => handleAside('editEvent')}>
                   <Icon id="pencil" size={24} />
                 </button>
                 <Button

@@ -33,6 +33,7 @@
     @apply h-[100px] w-full px-7 font-sans text-2xl;
   }
 
+
   textarea {
     @apply h-[400px] pt-14;
   }
@@ -189,6 +190,13 @@
 
   .number-with-outline {
     @apply font-script text-[130px] leading-none;
+  }
+
+  input.customEvent {
+    @apply h-[100px] w-full pl-64 font-sans text-2xl;
+  }
+  input.customAccount {
+    @apply h-[100px] w-full pl-56 font-sans text-2xl;
   }
 }
 

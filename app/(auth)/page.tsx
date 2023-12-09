@@ -39,14 +39,24 @@ export default async function Home() {
     <div className="flex w-full flex-col">
       <HeaderWithRulers className="mb-8 text-white" heading="LOGIN" />
       <form action={handleSignIn} className="flex flex-col gap-4">
-        <input type="text" name="email" placeholder="Email" />
+        <input type="text" name="email" placeholder="Email" tabIndex={1} />
         <ShowHidePassword name="password" />
-        <button type="submit">Login</button>
+        <button type="submit" tabIndex={3}>
+          Login
+        </button>
       </form>
-      <Link href="/signup" className="mt-4 text-center text-xl underline">
+      <Link
+        href="/signup"
+        className="mt-4 text-center text-xl underline"
+        tabIndex={4}
+      >
         Need an Account?
       </Link>
-      <Link href="/account/reset-password" className="text-center text-xl underline">
+      <Link
+        href="/account/reset-password"
+        className="text-center text-xl underline"
+        tabIndex={5}
+      >
         Forgot Password?
       </Link>
     </div>

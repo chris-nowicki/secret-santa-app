@@ -24,8 +24,13 @@ type SecretSantaContextType = {
     sendReminder: boolean
   }
   setEvent: React.Dispatch<React.SetStateAction<any>>
-  aside: Boolean
-  setAside: React.Dispatch<React.SetStateAction<boolean>>
+  aside: {
+    show: boolean
+    myAccount: boolean
+    editEvent: boolean
+  }
+  setAside: React.Dispatch<React.SetStateAction<any>>
+  handleAside: (menu: string) => void
 }
 
 export const SecretSantaContext = createContext<SecretSantaContextType | null>(
@@ -49,8 +54,21 @@ export const SecretSantaContextProvider = ({
     date: '',
     sendReminder: false,
   })
-  const [aside, setAside] = useState(false)
+  const [aside, setAside] = useState({
+    show: false,
+    myAccount: false,
+    editEvent: false,
+  })
   const supabase = createClientComponentClient()
+
+  const handleAside = async (menu: string) => {
+    setAside({
+      ...aside,
+      show: !aside.show,
+      myAccount: menu === 'myAccount' ? true : false,
+      editEvent: menu === 'editEvent' ? true : false,
+    })
+  }
 
   const getUser = async () => {
     const {
@@ -65,8 +83,8 @@ export const SecretSantaContextProvider = ({
 
       if (data) {
         setUser({
-          id: data[0].id,
-          name: data[0].firstName,
+          id: session.user.id,
+          name: data[0].name,
           email: data[0].email,
           avatar: data[0].avatar,
           role: data[0].role,
@@ -90,6 +108,7 @@ export const SecretSantaContextProvider = ({
         setEvent,
         aside,
         setAside,
+        handleAside,
       }}
     >
       {children}
