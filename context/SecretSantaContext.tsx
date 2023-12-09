@@ -120,7 +120,7 @@ export const useSecretSanta = () => {
   const context = useContext(SecretSantaContext)
   if (context === null) {
     throw new Error(
-      'useActiveSection must be used within a ActiveSectionProvider'
+      'useSecretSanta must be used within a SecretSantaProvider'
     )
   }
   return context
