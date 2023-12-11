@@ -71,6 +71,8 @@ export default function NewEvent() {
 
     if (action === 'DECLINED') {
       router.push('/event/invite/declined')
+    } else {
+      router.push('/event/invite/accept')
     }
   }
 

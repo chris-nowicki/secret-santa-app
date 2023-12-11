@@ -40,7 +40,7 @@ export default async function Home() {
       <HeaderWithRulers className="mb-8 text-white" heading="LOGIN" />
       <form action={handleSignIn} className="flex flex-col gap-4">
         <input type="text" name="email" placeholder="Email" tabIndex={1} />
-        <ShowHidePassword name="password" />
+        <ShowHidePassword name="password" tabIndex={2} />
         <button type="submit" tabIndex={3}>
           Login
         </button>

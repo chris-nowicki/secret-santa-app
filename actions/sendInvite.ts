@@ -37,11 +37,9 @@ export const sendInvite = async (formData: FormData) => {
     },
   })
 
-  console.log(data)
-
   if (data && data.user) {
     // Send email using resend
-
+    console.log(data)
     return {
       userId: data.user.id,
       eventId: eventId,

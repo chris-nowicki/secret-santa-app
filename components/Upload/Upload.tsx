@@ -1,10 +1,10 @@
 import Icon from '../Icon/Icon'
 
-const Upload = ({ name }) => {
+const Upload = ({ name }: { name: string }) => {
   return (
     <div className="flex h-[100px] w-full items-center border-[6px] border-dashed border-white px-8">
       <label
-        className="relative top-1 flex flex-1 items-center text-white"
+        className="relative top-1 flex flex-1 items-center text-white text-3xl"
         htmlFor={name}
       >
         Avatar

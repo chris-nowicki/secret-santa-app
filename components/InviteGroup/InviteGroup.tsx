@@ -13,12 +13,13 @@ type Invite = {
     email: string
     avatar: string
   }
+
   email: string
   name: string
-}[]
+}
 
 export default function InviteGroup() {
-  const [invites, setInvites] = useState<Invite>([])
+  const [invites, setInvites] = useState<Invite[] | null>([])
   const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(true)
   const { event } = useSecretSanta()
@@ -32,32 +33,38 @@ export default function InviteGroup() {
   }
 
   const handleClose = async (id?: number) => {
-    const { data, error } = await supabase
+    console.log(id)
+    const deleteStatus = await supabase
       .from('userStatus')
       .delete()
       .eq('id', id)
-
-    const newInvites = invites.filter((invite) => invite.id !== id)
+      .select()
+    console.log(deleteStatus.status)
+    const newInvites = invites!.filter((invite) => invite.id !== id)
     setInvites(newInvites)
   }
 
   const handleNewInvite = async (data: any) => {
-    const userStatus = await supabase.from('userStatus').insert({
-      eventId: event.id,
-      userId: data.userId,
-      status: 'INVITED',
-      name: data.name,
-      email: data.email,
-    })
-
-    console.log(userStatus)
-
-    setInvites([
-      ...invites,
-      {
-        id: data.id,
+    console.log(data)
+    const userStatus = await supabase
+      .from('userStatus')
+      .insert({
+        eventId: event.id,
+        userId: data.userId,
+        status: 'INVITED',
         name: data.name,
         email: data.email,
+      })
+      .select()
+
+    setInvites((prevInvites) => [
+      ...(prevInvites || []),
+      {
+        id: userStatus.data![0].id,
+        name: data.name,
+        email: data.email,
+        avatar: data.avatar,
+        status: 'INVITED',
       },
     ])
   }
@@ -65,6 +72,10 @@ export default function InviteGroup() {
   useEffect(() => {
     getInvites()
   }, [])
+
+  useEffect(() => {
+    console.log(invites)
+  }, [invites])
 
   return (
     <div>
@@ -113,6 +124,7 @@ export default function InviteGroup() {
 
       <div className="grid grid-cols-2 gap-x-12 gap-y-8">
         {loading &&
+          invites &&
           invites.map((invite) => (
             <Card
               key={invite.id}

@@ -18,7 +18,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-30 flex w-full justify-between pr-12 pt-4">
+      <div className="absolute left-0 top-0 z-30 flex w-full justify-between pr-12 pt-4">
         <Hamburger handleClick={handleCLick} />
         {!loading && <MyAccount name={user.name} />}
       </div>

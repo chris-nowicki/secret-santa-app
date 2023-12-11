@@ -19,8 +19,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${inter.className} bg-silverTree`}>
+    <html lang="en">
+      <body
+        className={`${inter.className} bg-silverTree`}
+        suppressHydrationWarning={true}
+      >
         <main className="flex w-full bg-interior">
           <SecretSantaContextProvider>
             <div className="w-full max-w-[460px]">
@@ -29,7 +32,7 @@ export default function RootLayout({
               <img
                 src="/images/logo__secret-santa.svg"
                 alt="Secret Santa"
-                className="fixed left-7 top-24 w-[347px]"
+                className="absolute left-7 top-24 w-[347px]"
               />
             </div>
             <div className="flex w-[calc(100%-460px)] flex-col">{children}</div>

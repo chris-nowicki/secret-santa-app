@@ -119,9 +119,7 @@ export const SecretSantaContextProvider = ({
 export const useSecretSanta = () => {
   const context = useContext(SecretSantaContext)
   if (context === null) {
-    throw new Error(
-      'useSecretSanta must be used within a SecretSantaProvider'
-    )
+    throw new Error('useSecretSanta must be used within a SecretSantaProvider')
   }
   return context
 }

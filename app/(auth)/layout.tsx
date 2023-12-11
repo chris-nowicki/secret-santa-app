@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import Footer from '@/components/Footer/Footer'
 import '../globals.css'
 
