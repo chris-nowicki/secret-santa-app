@@ -33,7 +33,6 @@
     @apply h-[100px] w-full px-7 font-sans text-2xl;
   }
 
-
   textarea {
     @apply h-[400px] pt-14;
   }
@@ -197,6 +196,10 @@
   }
   input.customAccount {
     @apply h-[100px] w-full pl-56 font-sans text-2xl;
+  }
+
+  button.custom {
+    @apply center h-16 w-16 rounded-full border-2 border-white bg-supernova text-black;
   }
 }
 

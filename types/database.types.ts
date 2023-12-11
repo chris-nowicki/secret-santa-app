@@ -207,22 +207,28 @@ export interface Database {
       }
       userStatus: {
         Row: {
+          email: string | null
           eventId: string
           id: number
+          name: string | null
           status: Database["public"]["Enums"]["inviteStatus"]
-          userId: string
+          userId: string | null
         }
         Insert: {
+          email?: string | null
           eventId: string
           id?: number
+          name?: string | null
           status?: Database["public"]["Enums"]["inviteStatus"]
-          userId: string
+          userId?: string | null
         }
         Update: {
+          email?: string | null
           eventId?: string
           id?: number
+          name?: string | null
           status?: Database["public"]["Enums"]["inviteStatus"]
-          userId?: string
+          userId?: string | null
         }
         Relationships: [
           {
