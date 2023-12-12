@@ -23,14 +23,15 @@ export default function EmailTemplate(props: EmailTemplateProps) {
       <Head />
       <Preview>You're invited to a Secret Santa Celebration!</Preview>
       <Tailwind>
+        <Head />
         <Body className=" bg-white text-black">
-            <Img
+          <Img
             src="http://localhost:3000/images/bg-email.png"
             alt="Secret Santa"
             width={800}
-            className="absolute left-0 top-0 -z-10"
+            className="absolute left-0 top-0 -z-10 hidden md:block"
           />
-          <div className='w-[425px] mt-[225px] pl-60'>
+          <div className="sm:mt-0 w-full pl-0 md:mt-[225px] md:w-[425px] md:pl-60">
             <Text className="font-sans ">Hey {props.name}!</Text>
             <Text className="font-sans">
               I hope this email sleighs you with joy! `Tis the season to be
@@ -75,7 +76,6 @@ export default function EmailTemplate(props: EmailTemplateProps) {
               <strong>{props.author}</strong>
             </Text>
           </div>
-  
         </Body>
       </Tailwind>
     </Html>
