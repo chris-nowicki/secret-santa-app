@@ -12,6 +12,7 @@ const config: Config = {
         interior: 'url("/images/bg__interior.svg")',
         checked: 'url("/images/checkbox--checked.svg")',
         unchecked: 'url("/images/checkbox--unchecked.svg")',
+        email: 'url("/images/bg__email.png")',
       },
       borderWidth: {
         1: '1px',

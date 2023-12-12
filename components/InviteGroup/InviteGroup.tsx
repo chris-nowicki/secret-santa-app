@@ -22,13 +22,14 @@ export default function InviteGroup() {
   const [invites, setInvites] = useState<Invite[] | null>([])
   const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(true)
-  const { event } = useSecretSanta()
+  const { event, user } = useSecretSanta()
 
   const getInvites = async () => {
     const { data, error } = await supabase
       .from('userStatus')
       .select(`id, profile(id, name, email, avatar), email, name`)
       .eq('eventId', event.id)
+    // @ts-ignore
     setInvites(data)
   }
 
@@ -87,7 +88,13 @@ export default function InviteGroup() {
       <form
         id="newInvite-form"
         action={async (formData) => {
-          const data = await sendInvite(formData)
+          const emailData = {
+            author: user.name,
+            eventName: event.name,
+            eventDate: event.date,
+          }
+
+          const data = await sendInvite(formData, emailData)
           handleNewInvite(data)
           const form = document.getElementById(
             'newInvite-form'

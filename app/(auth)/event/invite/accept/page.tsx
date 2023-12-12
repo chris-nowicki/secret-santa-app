@@ -3,6 +3,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
 import ShowHidePassword from '@/components/ShowHidePassword/ShowHidePassword'
 import Upload from '@/components/Upload/Upload'
+import { redirect } from 'next/navigation'
 
 export default function NewEvent() {
   const supabase = createClientComponentClient()
@@ -16,6 +17,8 @@ export default function NewEvent() {
 
     if (error) {
       console.error(error)
+    } else {
+      redirect('/group/dashboard')
     }
   }
 

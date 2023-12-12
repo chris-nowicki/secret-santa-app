@@ -6,24 +6,10 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { QueryData } from '@supabase/supabase-js'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
-import Card from '@/components/Card/Card'
 import Invites from '@/components/Invites/Invites'
-
-type Invite = {
-  id: number
-  profile?: {
-    id: string
-    name: string
-    email: string
-    avatar: string
-  }
-  email: string
-  name: string
-}
-
+import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
-  const [invites, setInvites] = useState<Invite[] | null>([])
   const { user, event, setEvent, handleAside } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClientComponentClient()
@@ -83,6 +69,11 @@ export default function GroupDashboard() {
               <h1 className="ml-5 font-condensed text-[116.89px] uppercase text-white">
                 {event.name}
               </h1>
+            </div>
+            <div className="mt-8 mb-20 flex items-center gap-36 pl-5">
+              <RsvpStatus heading="declined" status="error" count={2} />
+              <RsvpStatus heading="pending" status="warning" count={3} />
+              <RsvpStatus heading="accepted" status="success" count={3} />
             </div>
             <Invites />
           </div>

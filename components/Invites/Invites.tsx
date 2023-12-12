@@ -3,10 +3,22 @@ import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 
+type Invite = {
+  id: number
+  profile?: {
+    id: string
+    name: string
+    email: string
+    avatar: string
+  }[]
+  email: string
+  name: string
+}
+
 export default function Invites({ isCloseShowing = false }) {
   const supabase = createClientComponentClient()
-  const [loading, setLoading] = useState(true)
-  const { event, invites, setInvites } = useSecretSanta()
+  const { event } = useSecretSanta()
+  const [invites, setInvites] = useState<Invite[] | null>([])
 
   const getInvites = async () => {
     const { data, error } = await supabase
@@ -25,18 +37,12 @@ export default function Invites({ isCloseShowing = false }) {
       .eq('id', id)
 
     const newInvites = invites?.filter((invite) => invite.id !== id)
-    setInvites(newInvites)
+    setInvites(newInvites ? newInvites : [])
   }
 
   useEffect(() => {
     getInvites()
   }, [event])
-
-  useEffect(() => {
-    if (invites && invites.length > 0) {
-      setLoading(false)
-    }
-  }, [invites])
 
   return (
     <div className="grid grid-cols-2 gap-x-12 gap-y-8">
@@ -48,7 +54,9 @@ export default function Invites({ isCloseShowing = false }) {
               alt: 'Avatar',
               avatar: 'https://picsum.photos/seed/1701322447715/300/300',
             }}
+            // @ts-ignore
             email={invite.profile ? invite.profile.email : invite.email}
+            // @ts-ignore
             name={invite.profile ? invite.profile.name : invite.name}
             handleClose={() => handleClose(invite.id)}
             isCloseShowing={isCloseShowing}

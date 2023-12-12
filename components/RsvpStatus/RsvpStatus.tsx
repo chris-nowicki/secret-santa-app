@@ -1,5 +1,6 @@
 import Button from '../Button/Button'
 import Icon from '../Icon/Icon'
+import clsx from 'clsx'
 
 interface RsvpStatusProps {
   clearFilter?: {
@@ -21,12 +22,14 @@ const RsvpStatus = ({
 }: RsvpStatusProps) => {
   return (
     <div
-      className={`status-${status} h-[120px] w-full border-[6px] border-white ${
-        disabled ? 'opacity-50' : ''
-      }`}
+      className={clsx(
+        ' h-[120px] w-full  border-[6px] border-white',
+        disabled ? 'opacity-50' : '',
+        `status-${status}`
+      )}
     >
-      <div className="flex gap-3">
-        <div className="relative -left-2 -top-14">
+      <div className="flex">
+        <div className="relative -left-8 -top-16">
           <div className="outline-text number-with-outline relative z-0">
             {count}
           </div>
@@ -35,9 +38,7 @@ const RsvpStatus = ({
           </div>
         </div>
         <div
-          className={`relative pt-10 font-handwriting text-3xl uppercase ${
-            status === 'warning' ? 'text-black' : 'text-white'
-          }`}
+          className={clsx('relative pt-10 font-handwriting text-4xl uppercase text-white')}
         >
           {clearFilter?.isShowing && (
             <Button
