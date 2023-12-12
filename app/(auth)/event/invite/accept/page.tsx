@@ -1,12 +1,12 @@
 'use client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
 import ShowHidePassword from '@/components/ShowHidePassword/ShowHidePassword'
 import Upload from '@/components/Upload/Upload'
 import { redirect } from 'next/navigation'
 
 export default function NewEvent() {
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const handleSubmit = async (formData: FormData) => {
     const password: string = formData.get('password') as string

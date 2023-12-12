@@ -1,11 +1,10 @@
 'use server'
-import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/database.types'
 
 export const updateUser = async (formData: FormData) => {
-  const supabase = createServerActionClient<Database>({ cookies })
-
+  const supabase = createClient(cookies())
   const name = formData.get('name')
   const email = formData.get('email')
   const password = formData.get('password')

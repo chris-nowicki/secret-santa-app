@@ -1,11 +1,10 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from './utils/supabase/server'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import type { Database } from './types/database.types'
+import { cookies } from 'next/headers'
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient<Database>({ req, res })
+  const supabase = createClient(cookies())
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -21,6 +20,7 @@ export async function middleware(req: NextRequest) {
       .eq('userId', session.user.id)
 
     if (data && data.length > 0 && data[0].profile) {
+      // @ts-ignore
       if (data[0].profile.role === 'ADMIN') {
         return NextResponse.redirect(new URL(`/group/invite`, req.url))
       } else {

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
 import RsvpButton from '@/components/RsvpButton/RsvpButton'
 import format from 'date-fns/format'
@@ -31,7 +31,7 @@ export default function NewEvent() {
       date: '',
     },
   })
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const router = useRouter()
 
   const getEventData = async () => {

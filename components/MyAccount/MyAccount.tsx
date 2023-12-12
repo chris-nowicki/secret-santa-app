@@ -4,11 +4,11 @@ import { useRouter } from 'next/navigation'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 
 const MyAccount = ({ name }: { name: string | null }) => {
   const [isDropdownShowing, setIsDropdownShowing] = useState(false)
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const router = useRouter()
   const { handleAside } = useSecretSanta()
 

@@ -1,10 +1,10 @@
 'use client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
 import { useEffect } from 'react'
 
 export default function NewEvent() {
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()

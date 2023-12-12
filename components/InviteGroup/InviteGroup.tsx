@@ -1,6 +1,6 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import Card from '../Card/Card'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { useEffect, useState } from 'react'
 import { sendInvite } from '@/actions/sendInvite'
 import Icon from '../Icon/Icon'
@@ -20,8 +20,7 @@ type Invite = {
 
 export default function InviteGroup() {
   const [invites, setInvites] = useState<Invite[] | null>([])
-  const supabase = createClientComponentClient()
-  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
   const { event, user } = useSecretSanta()
 
   const getInvites = async () => {
@@ -130,8 +129,7 @@ export default function InviteGroup() {
       </form>
 
       <div className="grid grid-cols-2 gap-x-12 gap-y-8">
-        {loading &&
-          invites &&
+        {invites &&
           invites.map((invite) => (
             <Card
               key={invite.id}

@@ -2,7 +2,7 @@
 import { countdown } from '@/utils/countdown'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { QueryData } from '@supabase/supabase-js'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
@@ -12,7 +12,7 @@ export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
   const { user, event, setEvent, handleAside } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const handleClick = async () => {
     console.log('clicked')
@@ -70,7 +70,7 @@ export default function GroupDashboard() {
                 {event.name}
               </h1>
             </div>
-            <div className="mt-8 mb-20 flex items-center gap-36 pl-5">
+            <div className="mb-20 mt-8 flex items-center gap-36 pl-5">
               <RsvpStatus heading="declined" status="error" count={2} />
               <RsvpStatus heading="pending" status="warning" count={3} />
               <RsvpStatus heading="accepted" status="success" count={3} />

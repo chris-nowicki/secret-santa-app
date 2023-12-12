@@ -1,5 +1,5 @@
 'use client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import React, { useState, useContext, createContext, useEffect } from 'react'
 
 type SecretSantaProviderProps = {
@@ -59,7 +59,7 @@ export const SecretSantaContextProvider = ({
     myAccount: false,
     editEvent: false,
   })
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const handleAside = async (menu: string) => {
     setAside({

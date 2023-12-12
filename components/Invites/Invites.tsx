@@ -1,4 +1,4 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import { useSecretSanta } from '@/context/SecretSantaContext'
@@ -16,7 +16,7 @@ type Invite = {
 }
 
 export default function Invites({ isCloseShowing = false }) {
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const { event } = useSecretSanta()
   const [invites, setInvites] = useState<Invite[] | null>([])
 

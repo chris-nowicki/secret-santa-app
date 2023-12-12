@@ -2,7 +2,7 @@
 import { countdown } from '@/utils/countdown'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { QueryData } from '@supabase/supabase-js'
 import InviteGroup from '@/components/InviteGroup/InviteGroup'
 import Icon from '@/components/Icon/Icon'
@@ -15,7 +15,7 @@ export default function GroupInvite() {
   const [loading, setLoading] = useState(true)
   const { user, event, setEvent, handleAside } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
 
   const handleClick = async () => {
     console.log('clicked')

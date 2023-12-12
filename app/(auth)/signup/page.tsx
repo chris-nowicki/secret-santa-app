@@ -1,16 +1,12 @@
-import {
-  createServerComponentClient,
-  createServerActionClient,
-} from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import type { Database } from '@/types/database.types'
 import Link from 'next/link'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
 import ShowHidePassword from '@/components/ShowHidePassword/ShowHidePassword'
 
 export default async function Home() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = createClient(cookies())
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -24,7 +20,7 @@ export default async function Home() {
     const email = formData.get('email')
     const password = formData.get('password')
     const name = formData.get('name')
-    const supabase = createServerActionClient<Database>({ cookies })
+    const supabase = createClient(cookies())
 
     if (!email || !password) {
       return

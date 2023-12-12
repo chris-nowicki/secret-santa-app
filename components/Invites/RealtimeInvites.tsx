@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/utils/supabase/client'
 import Card from '../Card/Card'
 import { useRouter } from 'next/navigation'
 
@@ -13,7 +13,7 @@ export default function RealtimeInvites({
   handleClose: any
   isCloseShowing: any
 }) {
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const router = useRouter()
 
   useEffect(() => {
