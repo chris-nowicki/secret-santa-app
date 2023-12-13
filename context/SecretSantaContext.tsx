@@ -34,6 +34,11 @@ export const SecretSantaContextProvider = ({
     editEvent: false,
   })
   const [invites, setInvites] = useState([]) as any[]
+  const [statusCount, setStatusCount] = useState({
+    declined: 0,
+    invited: 0,
+    accepted: 0,
+  })
   const supabase = createClient()
 
   const handleAside = async (menu: string) => {
@@ -86,6 +91,8 @@ export const SecretSantaContextProvider = ({
         handleAside,
         invites,
         setInvites,
+        statusCount,
+        setStatusCount,
       }}
     >
       {children}

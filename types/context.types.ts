@@ -25,4 +25,10 @@ export type SecretSantaContextType = {
   handleAside: (menu: string) => void
   invites: any[]
   setInvites: React.Dispatch<React.SetStateAction<any>>
+  statusCount: {
+    accepted: number
+    invited: number
+    declined: number
+  }
+  setStatusCount: React.Dispatch<React.SetStateAction<any>>
 }

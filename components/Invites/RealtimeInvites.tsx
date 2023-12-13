@@ -11,8 +11,16 @@ export default function RealtimeInvites({
   handleClose: any
   isCloseShowing: any
 }) {
-  const { invites, setInvites } = useSecretSanta()
+  const { invites, setInvites, setStatusCount } = useSecretSanta()
   const supabase = createClient()
+
+  const statusInviteCountHelper = (data: any) => {
+    const declined = data.filter((data: any) => data.status === 'DECLINED')
+    const invited = data.filter((data: any) => data.status === 'INVITED')
+    const accepted = data.filter((data: any) => data.status === 'ACCEPTED')
+
+    return { declined, invited, accepted }
+  }
 
   useEffect(() => {
     const channel = supabase
@@ -26,8 +34,13 @@ export default function RealtimeInvites({
             const updatedInvites = invites.filter(
               (invite: any) => invite.id !== payload.old.id
             )
-
             setInvites([...updatedInvites])
+            const newStatusCount = statusInviteCountHelper(updatedInvites)
+            setStatusCount({
+              declined: newStatusCount.declined.length,
+              invited: newStatusCount.invited.length,
+              accepted: newStatusCount.accepted.length,
+            })
           } else if (payload && payload.eventType === 'UPDATE') {
             const existingInviteIndex = invites.findIndex(
               (invite) => invite.id === payload.new.id
@@ -37,9 +50,22 @@ export default function RealtimeInvites({
               // replace existing invite
               invites[existingInviteIndex] = payload.new
               setInvites([...invites])
+              const newStatusCount = statusInviteCountHelper(invites)
+              setStatusCount({
+                declined: newStatusCount.declined.length,
+                invited: newStatusCount.invited.length,
+                accepted: newStatusCount.accepted.length,
+              })
             }
           } else {
-            setInvites((invites: any) => [...invites, payload.new])
+            const newInvites = [...invites, payload.new]
+            setInvites(newInvites)
+            const newStatusCount = statusInviteCountHelper(newInvites)
+            setStatusCount({
+              declined: newStatusCount.declined.length,
+              invited: newStatusCount.invited.length,
+              accepted: newStatusCount.accepted.length,
+            })
           }
         }
       )
@@ -48,7 +74,7 @@ export default function RealtimeInvites({
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [supabase, setInvites, invites])
+  }, [supabase, setInvites, invites, setStatusCount])
 
   return (
     invites &&
