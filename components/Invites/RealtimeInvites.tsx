@@ -2,32 +2,45 @@
 import { useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import Card from '../Card/Card'
-import { useRouter } from 'next/navigation'
+import { useSecretSanta } from '@/context/SecretSantaContext'
 
 export default function RealtimeInvites({
-  invites,
   handleClose,
   isCloseShowing,
 }: {
-  invites: any
   handleClose: any
   isCloseShowing: any
 }) {
+  const { invites, setInvites } = useSecretSanta()
   const supabase = createClient()
-  const router = useRouter()
 
   useEffect(() => {
     const channel = supabase
-      .channel('realtime invites')
+      .channel('*')
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'userStatus',
-        },
-        () => {
-          router.refresh()
+        { event: '*', schema: 'public', table: 'userStatus' },
+        (payload) => {
+          if (payload && payload.eventType === 'DELETE') {
+            // filter out removed invites
+            const updatedInvites = invites.filter(
+              (invite: any) => invite.id !== payload.old.id
+            )
+
+            setInvites([...updatedInvites])
+          } else if (payload && payload.eventType === 'UPDATE') {
+            const existingInviteIndex = invites.findIndex(
+              (invite) => invite.id === payload.new.id
+            )
+
+            if (existingInviteIndex > -1) {
+              // replace existing invite
+              invites[existingInviteIndex] = payload.new
+              setInvites([...invites])
+            }
+          } else {
+            setInvites((invites: any) => [...invites, payload.new])
+          }
         }
       )
       .subscribe()
@@ -35,7 +48,7 @@ export default function RealtimeInvites({
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [supabase, router])
+  }, [supabase, setInvites, invites])
 
   return (
     invites &&
@@ -44,7 +57,12 @@ export default function RealtimeInvites({
         key={invite.id}
         avatar={{
           alt: 'Avatar',
-          avatar: 'https://picsum.photos/seed/1701322447715/300/300',
+          avatar: invite.profile ? invite.profile.avatar : '',
+          letter: invite.profile
+            ? invite.profile.name[0].substring(0, 1)
+            : invite.name[0].substring(0, 1),
+          indicator: invite.status,
+          showSantaHat: false,
         }}
         // @ts-ignore
         email={invite.profile ? invite.profile.email : invite.email}

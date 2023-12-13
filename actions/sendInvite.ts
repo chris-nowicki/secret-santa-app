@@ -71,7 +71,7 @@ export const sendInvite = async (
       emailData.eventName,
       emailData.eventDate
     )
-    // return data
+
     return {
       userId: data.user.id,
       eventId: eventId,

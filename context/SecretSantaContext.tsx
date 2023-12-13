@@ -1,36 +1,10 @@
 'use client'
 import { createClient } from '@/utils/supabase/client'
 import React, { useState, useContext, createContext, useEffect } from 'react'
+import type { SecretSantaContextType } from '@/types/context.types'
 
 type SecretSantaProviderProps = {
   children: React.ReactNode
-}
-
-type SecretSantaContextType = {
-  user: {
-    id: string
-    name: string
-    email: string
-    avatar?: string
-    role: string
-  }
-  setUser: React.Dispatch<React.SetStateAction<any>>
-  showSideMenu: boolean
-  setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>
-  event: {
-    id: string
-    name: string
-    date: string
-    sendReminder: boolean
-  }
-  setEvent: React.Dispatch<React.SetStateAction<any>>
-  aside: {
-    show: boolean
-    myAccount: boolean
-    editEvent: boolean
-  }
-  setAside: React.Dispatch<React.SetStateAction<any>>
-  handleAside: (menu: string) => void
 }
 
 export const SecretSantaContext = createContext<SecretSantaContextType | null>(
@@ -59,6 +33,7 @@ export const SecretSantaContextProvider = ({
     myAccount: false,
     editEvent: false,
   })
+  const [invites, setInvites] = useState([]) as any[]
   const supabase = createClient()
 
   const handleAside = async (menu: string) => {
@@ -109,6 +84,8 @@ export const SecretSantaContextProvider = ({
         aside,
         setAside,
         handleAside,
+        invites,
+        setInvites,
       }}
     >
       {children}

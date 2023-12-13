@@ -6,17 +6,13 @@ import { createClient } from '@/utils/supabase/client'
 import { QueryData } from '@supabase/supabase-js'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
-import Invites from '@/components/Invites/Invites'
 import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
+import Invites from '@/components/Invites/Invites'
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
-  const { user, event, setEvent, handleAside } = useSecretSanta()
+  const { user, event, setEvent, setInvites } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClient()
-
-  const handleClick = async () => {
-    console.log('clicked')
-  }
 
   const getEvent = async () => {
     const userStatus = supabase
@@ -75,7 +71,7 @@ export default function GroupDashboard() {
               <RsvpStatus heading="pending" status="warning" count={3} />
               <RsvpStatus heading="accepted" status="success" count={3} />
             </div>
-            <Invites />
+            <Invites isCloseShowing={false} />
           </div>
         </div>
       )}

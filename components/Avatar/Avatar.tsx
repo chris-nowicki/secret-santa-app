@@ -6,13 +6,13 @@ export interface AvatarProps {
   alt?: string
   avatar?: string
   showSantaHat?: boolean
-  indicator?: 'success' | 'error' | 'warning' | null
+  indicator: 'ACCEPTED' | 'INVITED' | 'DECLINED'
   icon?: string
 }
 
 const Avatar = ({
   letter,
-  indicator = null,
+  indicator,
   alt,
   avatar,
   icon,

@@ -25,7 +25,7 @@ const RsvpStatus = ({
       className={clsx(
         ' h-[120px] w-full  border-[6px] border-white',
         disabled ? 'opacity-50' : '',
-        `status-${status}`
+        status === 'success' ? 'bg-spanishGreen' : status === 'warning' ? 'bg-supernova' : status === 'error' && 'bg-orangeRed'
       )}
     >
       <div className="flex">
@@ -38,7 +38,9 @@ const RsvpStatus = ({
           </div>
         </div>
         <div
-          className={clsx('relative pt-10 font-handwriting text-4xl uppercase text-white')}
+          className={clsx(
+            'relative pt-10 font-handwriting text-4xl uppercase text-white'
+          )}
         >
           {clearFilter?.isShowing && (
             <Button

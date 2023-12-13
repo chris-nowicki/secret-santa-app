@@ -1,25 +1,25 @@
 import Icon from '../Icon/Icon'
 
 interface IndicatorProps {
-  status: 'success' | 'error' | 'warning'
+  status: 'ACCEPTED' | 'INVITED' | 'DECLINED'
 }
 
 const Indicator = ({ status }: IndicatorProps) => {
   return (
     <>
-      {status === 'success' && (
+      {status === 'ACCEPTED' && (
         <div className="indicator bg-spanishGreen text-white">
           <Icon id="check" size={16} />
         </div>
       )}
 
-      {status === 'error' && (
+      {status === 'DECLINED' && (
         <div className="indicator bg-orangeRed text-white">
           <Icon id="minus" size={16} />
         </div>
       )}
 
-      {status === 'warning' && (
+      {status === 'INVITED' && (
         <div className="indicator bg-supernova text-black">
           <Icon id="question" size={16} />
         </div>
