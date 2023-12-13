@@ -1,81 +1,22 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Card from '../Card/Card'
 import { createClient } from '@/utils/supabase/client'
-import { useEffect, useState } from 'react'
 import { sendInvite } from '@/actions/sendInvite'
 import Icon from '../Icon/Icon'
-
-type Invite = {
-  id: number
-  profile?: {
-    id: string
-    name: string
-    email: string
-    avatar: string
-  }
-
-  email: string
-  name: string
-}
+import Invites from '../Invites/Invites'
 
 export default function InviteGroup() {
-  const [invites, setInvites] = useState<Invite[] | null>([])
   const supabase = createClient()
   const { event, user } = useSecretSanta()
 
-  const getInvites = async () => {
-    const { data, error } = await supabase
-      .from('userStatus')
-      .select(`id, profile(id, name, email, avatar), email, name`)
-      .eq('eventId', event.id)
-    // @ts-ignore
-    setInvites(data)
-  }
-
-  const handleClose = async (id?: number) => {
-    console.log(id)
-    const deleteStatus = await supabase
-      .from('userStatus')
-      .delete()
-      .eq('id', id)
-      .select()
-    console.log(deleteStatus.status)
-    const newInvites = invites!.filter((invite) => invite.id !== id)
-    setInvites(newInvites)
-  }
-
   const handleNewInvite = async (data: any) => {
-    console.log(data)
-    const userStatus = await supabase
-      .from('userStatus')
-      .insert({
-        eventId: event.id,
-        userId: data.userId,
-        status: 'INVITED',
-        name: data.name,
-        email: data.email,
-      })
-      .select()
-
-    setInvites((prevInvites) => [
-      ...(prevInvites || []),
-      {
-        id: userStatus.data![0].id,
-        name: data.name,
-        email: data.email,
-        avatar: data.avatar,
-        status: 'INVITED',
-      },
-    ])
+    await supabase.from('userStatus').insert({
+      eventId: event.id,
+      userId: data.userId,
+      status: 'INVITED',
+      name: data.name,
+      email: data.email,
+    })
   }
-
-  useEffect(() => {
-    getInvites()
-  }, [])
-
-  useEffect(() => {
-    console.log(invites)
-  }, [invites])
 
   return (
     <div>
@@ -128,22 +69,7 @@ export default function InviteGroup() {
         </button>
       </form>
 
-      <div className="grid grid-cols-2 gap-x-12 gap-y-8">
-        {invites &&
-          invites.map((invite) => (
-            <Card
-              key={invite.id}
-              avatar={{
-                alt: 'Avatar',
-                avatar: 'https://picsum.photos/seed/1701322447715/300/300',
-              }}
-              email={invite.profile ? invite.profile.email : invite.email}
-              name={invite.profile ? invite.profile.name : invite.name}
-              handleClose={() => handleClose(invite.id)}
-              isCloseShowing={true}
-            />
-          ))}
-      </div>
+      <Invites isCloseShowing={true} />
     </div>
   )
 }

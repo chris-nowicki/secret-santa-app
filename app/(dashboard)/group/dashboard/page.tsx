@@ -6,17 +6,14 @@ import { createClient } from '@/utils/supabase/client'
 import { QueryData } from '@supabase/supabase-js'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
-import Invites from '@/components/Invites/Invites'
 import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
+import Invites from '@/components/Invites/Invites'
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
-  const { user, event, setEvent, handleAside } = useSecretSanta()
+  const { user, event, setEvent, statusCount, setStatusCount } =
+    useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClient()
-
-  const handleClick = async () => {
-    console.log('clicked')
-  }
 
   const getEvent = async () => {
     const userStatus = supabase
@@ -44,11 +41,38 @@ export default function GroupDashboard() {
     }
   }
 
+  const getStatusCount = async () => {
+    const userStatus = supabase
+      .from('userStatus')
+      .select('status')
+      .eq('eventId', event.id)
+
+    type userStatus = QueryData<typeof userStatus>
+
+    const { data } = await userStatus
+
+    if (data) {
+      const declined = data.filter((status) => status.status === 'DECLINED')
+      const pending = data.filter((status) => status.status === 'INVITED')
+      const accepted = data.filter((status) => status.status === 'ACCEPTED')
+
+      setStatusCount({
+        ...statusCount,
+        declined: declined.length,
+        invited: pending.length,
+        accepted: accepted.length,
+      })
+    }
+  }
+
   useEffect(() => {
-    user.id !== '' && getEvent()
+    if (user.id !== '') {
+      getEvent()
+    }
   }, [user])
 
   useEffect(() => {
+    getStatusCount()
     if (event.id !== '') {
       setLoading(false)
     }
@@ -71,11 +95,23 @@ export default function GroupDashboard() {
               </h1>
             </div>
             <div className="mb-20 mt-8 flex items-center gap-36 pl-5">
-              <RsvpStatus heading="declined" status="error" count={2} />
-              <RsvpStatus heading="pending" status="warning" count={3} />
-              <RsvpStatus heading="accepted" status="success" count={3} />
+              <RsvpStatus
+                heading="declined"
+                status="error"
+                count={statusCount.declined}
+              />
+              <RsvpStatus
+                heading="pending"
+                status="warning"
+                count={statusCount.invited}
+              />
+              <RsvpStatus
+                heading="accepted"
+                status="success"
+                count={statusCount.accepted}
+              />
             </div>
-            <Invites />
+            <Invites isCloseShowing={false} />
           </div>
         </div>
       )}

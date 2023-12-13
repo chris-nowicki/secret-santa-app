@@ -1,6 +1,7 @@
 'use client'
 import clsx from 'clsx'
 import { useSecretSanta } from '@/context/SecretSantaContext'
+import Link from 'next/link'
 
 export default function Nav() {
   const { showSideMenu } = useSecretSanta()
@@ -15,7 +16,7 @@ export default function Nav() {
       <nav className="top-nav">
         <ul>
           <li>
-            <a href="#">Dashboard</a>
+            <Link href="/group/dashboard">Dashboard</Link>
           </li>
           <li>
             <a href="#">Our Group</a>
