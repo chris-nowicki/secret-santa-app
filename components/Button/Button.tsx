@@ -14,7 +14,7 @@ const Button = ({
   return (
     <button
       className={`
-        rounded-full
+        z-20 rounded-full
       ${
         size === 'large'
           ? 'w-full py-5 font-handwriting text-3xl uppercase'

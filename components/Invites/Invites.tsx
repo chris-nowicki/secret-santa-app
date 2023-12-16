@@ -24,7 +24,7 @@ export default function Invites({ isCloseShowing = false }) {
   }, [event])
 
   return (
-    <div className="grid grid-cols-2 gap-x-12 gap-y-8">
+    <div className="grid grid-cols-2 gap-x-12 gap-y-8 mb-20">
       <RealtimeInvites
         isCloseShowing={isCloseShowing}
         handleClose={handleClose}

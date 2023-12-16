@@ -8,10 +8,19 @@ import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/EditEvent/EditEvent'
 import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
 import Invites from '@/components/Invites/Invites'
+import EditAccount from '@/components/EditAccount/EditAccount'
+
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
-  const { user, event, setEvent, statusCount, setStatusCount } =
-    useSecretSanta()
+
+  const {
+    user,
+    event,
+    setEvent,
+    statusCount,
+    setStatusCount,
+    filteredInviteData,
+  } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClient()
 
@@ -84,6 +93,7 @@ export default function GroupDashboard() {
         <div className="mt-[90px] flex w-full">
           <Aside>
             <EditEvent />
+            <EditAccount />
           </Aside>
           <div className="flex w-full flex-col pr-12">
             <span className="-mb-10 ml-5 font-handwriting text-[31.5px] uppercase text-white">
@@ -94,21 +104,46 @@ export default function GroupDashboard() {
                 {event.name}
               </h1>
             </div>
-            <div className="mb-20 mt-8 flex items-center gap-36 pl-5">
+
+            {/* RSVP status buttons */}
+            <div className="mb-20 mt-8 flex w-full items-center gap-20 pl-5">
               <RsvpStatus
                 heading="declined"
                 status="error"
                 count={statusCount.declined}
+                disabled={
+                  filteredInviteData.filter != 'ALL' &&
+                  filteredInviteData.filter != 'DECLINED'
+                }
+                clearFilter={{
+                  isShowing: filteredInviteData.filter === 'DECLINED',
+                }}
               />
+
               <RsvpStatus
                 heading="pending"
                 status="warning"
                 count={statusCount.invited}
+                disabled={
+                  filteredInviteData.filter != 'ALL' &&
+                  filteredInviteData.filter != 'INVITED'
+                }
+                clearFilter={{
+                  isShowing: filteredInviteData.filter === 'INVITED',
+                }}
               />
+
               <RsvpStatus
                 heading="accepted"
                 status="success"
                 count={statusCount.accepted}
+                disabled={
+                  filteredInviteData.filter != 'ALL' &&
+                  filteredInviteData.filter != 'ACCEPTED'
+                }
+                clearFilter={{
+                  isShowing: filteredInviteData.filter === 'ACCEPTED',
+                }}
               />
             </div>
             <Invites isCloseShowing={false} />

@@ -34,6 +34,10 @@ export const SecretSantaContextProvider = ({
     editEvent: false,
   })
   const [invites, setInvites] = useState([]) as any[]
+  const [filteredInviteData, setFilteredInviteData] = useState({
+    data: [],
+    filter: 'ALL',
+  })
   const [statusCount, setStatusCount] = useState({
     declined: 0,
     invited: 0,
@@ -73,9 +77,42 @@ export const SecretSantaContextProvider = ({
     }
   }
 
+  const handleFilter = (status: string) => {
+    const filter = [...invites]
+    const filtered = filter.filter(
+      (invite) => invite.status === status.toUpperCase()
+    )
+    setFilteredInviteData({
+      data: filtered,
+      filter: status,
+    })
+  }
+
   useEffect(() => {
     getUser()
   }, [])
+
+  useEffect(() => {
+    if (filteredInviteData.filter === 'ALL') {
+      setFilteredInviteData({
+        ...filteredInviteData,
+        data: invites,
+      })
+      return
+    }
+
+    if (filteredInviteData.filter === 'ACCEPTED') {
+      handleFilter('ACCEPTED')
+      return
+    }
+
+    if (filteredInviteData.filter === 'DECLINED') {
+      handleFilter('DECLINED')
+      return
+    }
+
+    handleFilter('INVITED')
+  }, [invites])
 
   return (
     <SecretSantaContext.Provider
@@ -93,6 +130,8 @@ export const SecretSantaContextProvider = ({
         setInvites,
         statusCount,
         setStatusCount,
+        filteredInviteData,
+        setFilteredInviteData,
       }}
     >
       {children}

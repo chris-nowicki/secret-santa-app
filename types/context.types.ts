@@ -31,4 +31,9 @@ export type SecretSantaContextType = {
     declined: number
   }
   setStatusCount: React.Dispatch<React.SetStateAction<any>>
+  filteredInviteData: {
+    data: any[]
+    filter: string
+  }
+  setFilteredInviteData: React.Dispatch<React.SetStateAction<any>>
 }

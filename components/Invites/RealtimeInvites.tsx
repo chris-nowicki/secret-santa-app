@@ -1,8 +1,8 @@
 'use client'
 import { useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import Card from '../Card/Card'
 import { useSecretSanta } from '@/context/SecretSantaContext'
+import Card from '../Card/Card'
 
 export default function RealtimeInvites({
   handleClose,
@@ -11,7 +11,8 @@ export default function RealtimeInvites({
   handleClose: any
   isCloseShowing: any
 }) {
-  const { invites, setInvites, setStatusCount } = useSecretSanta()
+  const { invites, setInvites, setStatusCount, filteredInviteData } =
+    useSecretSanta()
   const supabase = createClient()
 
   const statusInviteCountHelper = (data: any) => {
@@ -19,7 +20,11 @@ export default function RealtimeInvites({
     const invited = data.filter((data: any) => data.status === 'INVITED')
     const accepted = data.filter((data: any) => data.status === 'ACCEPTED')
 
-    return { declined, invited, accepted }
+    setStatusCount({
+      declined: declined.length,
+      invited: invited.length,
+      accepted: accepted.length,
+    })
   }
 
   useEffect(() => {
@@ -34,38 +39,38 @@ export default function RealtimeInvites({
             const updatedInvites = invites.filter(
               (invite: any) => invite.id !== payload.old.id
             )
+
+            // update list of invites
             setInvites([...updatedInvites])
-            const newStatusCount = statusInviteCountHelper(updatedInvites)
-            setStatusCount({
-              declined: newStatusCount.declined.length,
-              invited: newStatusCount.invited.length,
-              accepted: newStatusCount.accepted.length,
-            })
+
+            // update status count for dashboard
+            statusInviteCountHelper(updatedInvites)
           } else if (payload && payload.eventType === 'UPDATE') {
+            // find the existing invite
             const existingInviteIndex = invites.findIndex(
               (invite) => invite.id === payload.new.id
             )
 
+            // if invite exists, replace it
             if (existingInviteIndex > -1) {
               // replace existing invite
               invites[existingInviteIndex] = payload.new
+
+              // update list of invites
               setInvites([...invites])
-              const newStatusCount = statusInviteCountHelper(invites)
-              setStatusCount({
-                declined: newStatusCount.declined.length,
-                invited: newStatusCount.invited.length,
-                accepted: newStatusCount.accepted.length,
-              })
+
+              // update status count for dashboard
+              statusInviteCountHelper(invites)
             }
           } else {
+            // add new invite
             const newInvites = [...invites, payload.new]
+
+            // update list of invites
             setInvites(newInvites)
-            const newStatusCount = statusInviteCountHelper(newInvites)
-            setStatusCount({
-              declined: newStatusCount.declined.length,
-              invited: newStatusCount.invited.length,
-              accepted: newStatusCount.accepted.length,
-            })
+
+            // update status count for dashboard
+            statusInviteCountHelper(newInvites)
           }
         }
       )
@@ -74,11 +79,11 @@ export default function RealtimeInvites({
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [supabase, setInvites, invites, setStatusCount])
+  }, [supabase, setInvites, invites])
 
   return (
-    invites &&
-    invites?.map((invite: any) => (
+    filteredInviteData &&
+    filteredInviteData.data.map((invite: any) => (
       <Card
         key={invite.id}
         avatar={{

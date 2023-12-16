@@ -1,3 +1,4 @@
+import { useSecretSanta } from '@/context/SecretSantaContext'
 import Button from '../Button/Button'
 import Icon from '../Icon/Icon'
 import clsx from 'clsx'
@@ -5,7 +6,6 @@ import clsx from 'clsx'
 interface RsvpStatusProps {
   clearFilter?: {
     isShowing: boolean
-    handleClick: () => void
   }
   count: number
   disabled?: boolean
@@ -20,6 +20,35 @@ const RsvpStatus = ({
   status,
   heading,
 }: RsvpStatusProps) => {
+  const { setFilteredInviteData, invites } = useSecretSanta()
+
+  const handleFilter = (status: string) => {
+    if (status === 'ALL') {
+      setFilteredInviteData({
+        data: invites,
+        filter: 'ALL',
+      })
+      return
+    }
+    const filter = [...invites]
+    const filtered = filter.filter(
+      (invite) => invite.status === status.toUpperCase()
+    )
+    setFilteredInviteData({
+      data: filtered,
+      filter: status,
+    })
+  }
+
+  const resetFilter = () => [
+    setFilteredInviteData({
+      data: invites,
+      filter: 'ALL',
+    }),
+
+    console.log('we get here'),
+  ]
+
   return (
     <div
       className={clsx(
@@ -35,7 +64,7 @@ const RsvpStatus = ({
       <div className="flex">
         <div
           className={clsx(
-            'relative -left-8 -top-16',
+            'relative  -left-8 -top-16 z-10',
             status === 'success'
               ? 'text-spanishGreen'
               : status === 'warning'
@@ -52,14 +81,14 @@ const RsvpStatus = ({
         </div>
         <div
           className={clsx(
-            'relative pt-10 font-handwriting text-4xl uppercase text-white'
+            'relative flex w-full items-center font-handwriting text-4xl text-white'
           )}
         >
           {clearFilter?.isShowing && (
             <Button
               size="small"
-              handleClick={() => {}}
-              className={`absolute -top-2 whitespace-nowrap ${
+              handleClick={resetFilter}
+              className={`absolute -top-4 left-6 z-30 whitespace-nowrap ${
                 status === 'success' ? 'bg-countyGreen' : ''
               } ${status === 'warning' ? 'bg-spicyMustard text-white' : ''} ${
                 status === 'error' ? 'bg-cognac' : ''
@@ -71,7 +100,17 @@ const RsvpStatus = ({
               </div>
             </Button>
           )}
-          {heading}
+          <button
+            className="flex w-full"
+            onClick={() =>
+              handleFilter(
+                heading === 'pending' ? 'INVITED' : heading.toUpperCase()
+              )
+            }
+            disabled={disabled}
+          >
+            {heading.toUpperCase()}
+          </button>
         </div>
       </div>
     </div>

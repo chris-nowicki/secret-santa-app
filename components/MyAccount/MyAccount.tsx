@@ -5,6 +5,7 @@ import { useSecretSanta } from '@/context/SecretSantaContext'
 import Avatar from '../Avatar/Avatar'
 import Icon from '../Icon/Icon'
 import { createClient } from '@/utils/supabase/client'
+import Link from 'next/link'
 
 const MyAccount = ({ name }: { name: string | null }) => {
   const [isDropdownShowing, setIsDropdownShowing] = useState(false)
@@ -29,7 +30,9 @@ const MyAccount = ({ name }: { name: string | null }) => {
         </motion.div>
         <Avatar
           avatar="https://picsum.photos/seed/1701239203355/300/300"
-          alt="Amy"
+          alt="User Avatar"
+          showSantaHat={false}
+          letter={name ? name[0].substring(0, 1) : ''}
         />
         <div className="text-left">
           <div className="text-sm">Logged in as</div>
@@ -65,7 +68,7 @@ const MyAccount = ({ name }: { name: string | null }) => {
                 <div className="text-pastelMagenta">
                   <Icon size={32} id="calendar" />
                 </div>
-                My Event
+                <Link href="/group/invite">My Event</Link>
               </li>
               <li>
                 <div className="text-pastelMagenta">
