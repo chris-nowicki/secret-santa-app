@@ -1,7 +1,14 @@
 'use client'
 import { createClient } from '@/utils/supabase/client'
 import React, { useState, useContext, createContext, useEffect } from 'react'
-import type { SecretSantaContextType } from '@/types/context.types'
+import type {
+  SecretSantaContextType,
+  InviteType,
+  FilteredDataInviteType,
+  EventType,
+  UserType,
+} from '@/types/context.types'
+import { QueryData } from '@supabase/supabase-js'
 
 type SecretSantaProviderProps = {
   children: React.ReactNode
@@ -14,13 +21,7 @@ export const SecretSantaContext = createContext<SecretSantaContextType | null>(
 export const SecretSantaContextProvider = ({
   children,
 }: SecretSantaProviderProps) => {
-  const [user, setUser] = useState({
-    id: '',
-    name: '',
-    email: '',
-    avatar: '',
-    role: '',
-  })
+  const [user, setUser] = useState({} as UserType)
   const [showSideMenu, setShowSideMenu] = useState(false)
   const [event, setEvent] = useState({
     id: '',
@@ -28,15 +29,16 @@ export const SecretSantaContextProvider = ({
     date: '',
     sendReminder: false,
   })
+  const [invites, setInvites] = useState<InviteType[]>([])
+  const [filteredInviteData, setFilteredInviteData] =
+    useState<FilteredDataInviteType>({
+      data: [],
+      filter: 'ALL',
+    })
   const [aside, setAside] = useState({
     show: false,
     myAccount: false,
     editEvent: false,
-  })
-  const [invites, setInvites] = useState([]) as any[]
-  const [filteredInviteData, setFilteredInviteData] = useState({
-    data: [],
-    filter: 'ALL',
   })
   const [statusCount, setStatusCount] = useState({
     declined: 0,
@@ -54,7 +56,7 @@ export const SecretSantaContextProvider = ({
     })
   }
 
-  const getUser = async () => {
+  const fetchUser = async () => {
     const {
       data: { session },
     } = await supabase.auth.getSession()
@@ -77,41 +79,80 @@ export const SecretSantaContextProvider = ({
     }
   }
 
-  const handleFilter = (status: string) => {
-    const filter = [...invites]
-    const filtered = filter.filter(
-      (invite) => invite.status === status.toUpperCase()
-    )
-    setFilteredInviteData({
-      data: filtered,
-      filter: status,
-    })
-  }
-
-  useEffect(() => {
-    getUser()
-  }, [])
-
-  useEffect(() => {
+  const renderFilteredInviteData = () => {
     if (filteredInviteData.filter === 'ALL') {
-      setFilteredInviteData({
-        ...filteredInviteData,
-        data: invites,
-      })
-      return
+      return invites as never[]
     }
 
     if (filteredInviteData.filter === 'ACCEPTED') {
-      handleFilter('ACCEPTED')
-      return
+      return invites.filter((invite) => invite.status === 'ACCEPTED')
     }
 
     if (filteredInviteData.filter === 'DECLINED') {
-      handleFilter('DECLINED')
-      return
+      return invites.filter((invite) => invite.status === 'DECLINED')
     }
 
-    handleFilter('INVITED')
+    return invites.filter((invite) => invite.status === 'INVITED')
+  }
+
+  const getEvent = async () => {
+    const userStatus = supabase
+      .from('userStatus')
+      .select(`id, status, event(id, name, date, sendReminder)`)
+      .eq('userId', user?.id)
+
+    type userStatus = QueryData<typeof userStatus>
+
+    const { data } = await userStatus
+
+    if (data && data[0].event) {
+      const event = data[0].event
+
+      setEvent({
+        // @ts-ignore
+        id: event.id,
+        // @ts-ignore
+        name: event.name,
+        // @ts-ignore
+        date: event.date,
+        // @ts-ignore
+        sendReminder: event.sendReminder,
+      })
+    }
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  useEffect(() => {
+    if (user && user.id !== '') {
+      getEvent()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (event && event.id !== '') {
+      const fetchInvites = async () => {
+        const { data } = await supabase
+          .from('invite')
+          .select('*')
+          .eq('eventId', event.id)
+
+        if (data) {
+          setInvites(data)
+        }
+      }
+
+      fetchInvites()
+    }
+  }, [event])
+
+  useEffect(() => {
+    setFilteredInviteData({
+      ...filteredInviteData,
+      data: renderFilteredInviteData(),
+    })
   }, [invites])
 
   return (

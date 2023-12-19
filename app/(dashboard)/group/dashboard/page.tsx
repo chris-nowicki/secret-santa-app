@@ -24,31 +24,31 @@ export default function GroupDashboard() {
   const { weeks, days } = countdown(new Date(event?.date))
   const supabase = createClient()
 
-  const getEvent = async () => {
-    const userStatus = supabase
-      .from('userStatus')
-      .select(`id, status, event(id, name, date, sendReminder)`)
-      .eq('userId', user.id)
+  // const getEvent = async () => {
+  //   const userStatus = supabase
+  //     .from('userStatus')
+  //     .select(`id, status, event(id, name, date, sendReminder)`)
+  //     .eq('userId', user.id)
 
-    type userStatus = QueryData<typeof userStatus>
+  //   type userStatus = QueryData<typeof userStatus>
 
-    const { data } = await userStatus
+  //   const { data } = await userStatus
 
-    if (data && data[0].event) {
-      const event = data[0].event
+  //   if (data && data[0].event) {
+  //     const event = data[0].event
 
-      setEvent({
-        // @ts-ignore
-        id: event.id,
-        // @ts-ignore
-        name: event.name,
-        // @ts-ignore
-        date: event.date,
-        // @ts-ignore
-        sendReminder: event.sendReminder,
-      })
-    }
-  }
+  //     setEvent({
+  //       // @ts-ignore
+  //       id: event.id,
+  //       // @ts-ignore
+  //       name: event.name,
+  //       // @ts-ignore
+  //       date: event.date,
+  //       // @ts-ignore
+  //       sendReminder: event.sendReminder,
+  //     })
+  //   }
+  // }
 
   const getStatusCount = async () => {
     const userStatus = supabase
@@ -73,12 +73,6 @@ export default function GroupDashboard() {
       })
     }
   }
-
-  useEffect(() => {
-    if (user.id !== '') {
-      getEvent()
-    }
-  }, [user])
 
   useEffect(() => {
     if (event.id !== '') {

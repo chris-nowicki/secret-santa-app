@@ -1,25 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Checkbox from '../Checkbox/Checkbox'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import format from 'date-fns/format'
 import { updateEvent } from '@/actions/updateEvent'
+import format from 'date-fns/format'
+
+type EventDataType = {
+  eventName: string
+  eventDate: string
+  sendReminder: boolean
+}
 
 export default function EditEvent() {
   const { event, setEvent, setAside, aside } = useSecretSanta()
-  const [eventData, setEventData] = useState({
-    eventName: event.name,
-    eventDate: format(new Date(event.date), 'yyyy-MM-dd'),
-    sendReminder: event.sendReminder,
+  const [eventData, setEventData] = useState<EventDataType>({
+    eventName: '',
+    eventDate: '',
+    sendReminder: false,
   })
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = event.target
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target
 
-    setEventData({
-      ...eventData,
-      [name]: type === 'checkbox' ? checked : value,
-    })
+    setEventData((prevEvent) => ({
+      ...prevEvent,
+      [name]: type === 'checkbox' ? checked : value || '', // Provide a default value for 'value'
+    }))
   }
+
+  useEffect(() => {
+    setEventData({
+      eventName: event.name,
+      eventDate: format(new Date(event.date), 'yyyy-MM-dd'),
+      sendReminder: event.sendReminder,
+    })
+  }, [event])
 
   return (
     <>
@@ -35,14 +49,18 @@ export default function EditEvent() {
             action={async (formData) => {
               await updateEvent(formData)
 
-              setEvent({
-                ...event,
+              setEvent((prevEvent) => ({
+                ...prevEvent,
                 name: eventData.eventName,
                 date: eventData.eventDate,
                 sendReminder: eventData.sendReminder,
-              })
+              }))
 
-              setAside(false)
+              setAside((prevAside) => ({
+                ...prevAside,
+                show: false,
+                editEvent: false,
+              }))
             }}
             className="mt-8 flex w-[661px] flex-col gap-4"
           >
