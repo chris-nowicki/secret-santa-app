@@ -45,8 +45,6 @@ const RsvpStatus = ({
       data: invites,
       filter: 'ALL',
     }),
-
-    console.log('we get here'),
   ]
 
   return (

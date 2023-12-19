@@ -24,9 +24,9 @@ export default function RootLayout({
         className={`${inter.className} bg-silverTree`}
         suppressHydrationWarning={true}
       >
-        <main className="flex w-full bg-interior">
+        <main className="flex w-full overflow-y-hidden bg-interior">
           <SecretSantaContextProvider>
-            <div className="w-full max-w-[460px]">
+            <div className="w-full max-w-[460px] ">
               <NavBar />
               <Nav />
               <img

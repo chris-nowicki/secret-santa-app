@@ -4,7 +4,11 @@ import { useSecretSanta } from '@/context/SecretSantaContext'
 import Link from 'next/link'
 
 export default function Nav() {
-  const { showSideMenu } = useSecretSanta()
+  const { showSideMenu, setShowSideMenu } = useSecretSanta()
+
+  const handleClick = () => {
+    setShowSideMenu((prev) => !prev)
+  }
 
   return (
     <div
@@ -19,10 +23,10 @@ export default function Nav() {
             <Link href="/group/dashboard">Dashboard</Link>
           </li>
           <li>
-            <a href="#">Our Group</a>
+            <Link href="/group/invite">Our Group</Link>
           </li>
           <li>
-            <a href="#">My Wish List</a>
+            <Link href="/group/wishlist">My Wish List</Link>
           </li>
         </ul>
       </nav>

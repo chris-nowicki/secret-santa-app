@@ -81,8 +81,8 @@ export default function GroupDashboard() {
   }, [user])
 
   useEffect(() => {
-    getStatusCount()
     if (event.id !== '') {
+      getStatusCount()
       setLoading(false)
     }
   }, [event])
