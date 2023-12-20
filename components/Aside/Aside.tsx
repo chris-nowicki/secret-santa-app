@@ -12,7 +12,7 @@ export default function Aside({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={clsx(
-        'fixed right-0 top-0 z-30 h-screen w-[calc(100%-460px)] flex-col bg-spanishGreen',
+        'fixed right-0 top-0 z-30 h-screen w-[calc(100%-460px)] flex-col bg-spanishGreen overflow-y-scroll',
         aside.show ? 'flex' : 'hidden'
       )}
     >

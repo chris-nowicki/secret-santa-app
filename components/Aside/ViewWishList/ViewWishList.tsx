@@ -6,9 +6,10 @@ import Card from '@/components/Card/Card'
 import EmptyCard from '@/components/EmptyCard/EmptyCard'
 import { extractDomain } from '@/utils/extractDomain'
 import Icon from '@/components/Icon/Icon'
+import Link from 'next/link'
 
 export default function ViewWishList() {
-  const { user, event, aside, attendee } = useSecretSanta()
+  const { user, event, aside, attendee, setAside } = useSecretSanta()
   const { wishList, loading, fetchWishList } = useWishlist(
     attendee.id,
     event.id
@@ -25,18 +26,29 @@ export default function ViewWishList() {
   return (
     <>
       {aside.viewWishList && (
-        <div className="w-[794px]">
+        <div className="mb-96 w-[794px]">
           <div className="flex items-center justify-between">
             <h1 className="font-condensed text-[116.89px] uppercase text-white">
               wish list
             </h1>
             {user.id === attendee.id && (
               <button
-                onClick={handleClick}
-                className="flex w-[112px] items-center justify-center gap-2 rounded-full bg-supernova py-2 font-sans text-sm font-bold uppercase"
+                onClick={() =>
+                  setAside({
+                    ...aside,
+                    show: false,
+                    viewWishList: false,
+                  })
+                }
+                className="w-[112px] gap-2 rounded-full bg-supernova py-2 font-sans text-sm font-bold uppercase"
               >
-                <Icon id="pencil" size={24} />
-                edit
+                <Link
+                  href="/group/wishlist/"
+                  className="flex items-center justify-center gap-2"
+                >
+                  <Icon id="pencil" size={24} />
+                  edit
+                </Link>
               </button>
             )}
           </div>
