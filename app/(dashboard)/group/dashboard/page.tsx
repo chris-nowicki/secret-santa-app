@@ -7,15 +7,12 @@ import Invites from '@/components/Invites/Invites'
 import EditAccount from '@/components/EditAccount/EditAccount'
 import { countdown } from '@/utils/countdown'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import { createClient } from '@/utils/supabase/client'
 import { useFetchStatusCount } from '@/hooks/useFetchStatusCount'
-import Spinner from '@/components/Spinner'
+import { processStatusData } from '@/utils/processStatusData'
 
 type UserStatus = {
   status: 'DECLINED' | 'INVITED' | 'ACCEPTED'
 }
-
-const supabase = createClient()
 
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
@@ -23,18 +20,6 @@ export default function GroupDashboard() {
     useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const { data: statusData, error } = useFetchStatusCount(event?.id ?? '')
-
-  const processStatusData = (data: UserStatus[]) => {
-    const declined = data.filter(
-      (status) => status.status === 'DECLINED'
-    ).length
-    const pending = data.filter((status) => status.status === 'INVITED').length
-    const accepted = data.filter(
-      (status) => status.status === 'ACCEPTED'
-    ).length
-
-    setStatusCount({ ...statusCount, declined, invited: pending, accepted })
-  }
 
   const renderRsvpStatus = useCallback(
     (
@@ -64,7 +49,8 @@ export default function GroupDashboard() {
 
   useEffect(() => {
     if (statusData) {
-      processStatusData(statusData)
+      const updatedStatusCount = processStatusData(statusData as UserStatus[])
+      setStatusCount({ ...statusCount, ...updatedStatusCount })
       setLoading(false)
     }
   }, [statusData])
