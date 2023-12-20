@@ -1,20 +1,18 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useWishlist } from '@/hooks/useWishlist'
 import { handleWishList } from '@/actions/handleWishList'
-import { createClient } from '@/utils/supabase/client'
 import Aside from '@/components/Aside/Aside'
 import EditAccount from '@/components/EditAccount/EditAccount'
 import WishListField from '@/components/WishListField/WishListField'
 import Loading from '@/components/Spinner/LoadingSpinner'
 
-const supabase = createClient()
-
 export default function WishList() {
-  const [loading, setLoading] = useState(false)
   const { user, event } = useSecretSanta()
   const {
+    loading,
+    fetchWishList,
     wishList,
     setWishList,
     currentItem,
@@ -22,26 +20,7 @@ export default function WishList() {
     addItem,
     updateItem,
     deleteItem,
-  } = useWishlist()
-
-  const fetchWishList = useCallback(async () => {
-    if (user.id && event.id) {
-      try {
-        const { data, error } = await supabase
-          .from('wishList')
-          .select('*')
-          .eq('eventId', event.id)
-          .eq('userId', user.id)
-
-        if (error) throw error
-        setWishList(data || [])
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-  }, [user.id, event.id])
+  } = useWishlist({ user, event })
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

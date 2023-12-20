@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { WishListType } from '@/types/types'
 import { getMetaData } from '@/utils/websiteMetaData'
-import { useSecretSanta } from '@/context/SecretSantaContext'
+import { createClient } from '@/utils/supabase/client'
+import { UserType, EventType } from '@/types/context.types'
 
 type MetaDataType = {
   title?: string
@@ -9,10 +10,36 @@ type MetaDataType = {
   ogImage?: string
 }
 
-export const useWishlist = () => {
+type UseWishListType = {
+  user: UserType
+  event: EventType
+}
+
+const supabase = createClient()
+
+export const useWishlist = ({ user, event }: UseWishListType) => {
   const [wishList, setWishList] = useState([] as WishListType[])
   const [currentItem, setCurrentItem] = useState({ name: '', url: '' })
-  const { user, event } = useSecretSanta()
+  const [loading, setLoading] = useState(false)
+
+  const fetchWishList = useCallback(async () => {
+    if (user.id && event.id) {
+      try {
+        const { data, error } = await supabase
+          .from('wishList')
+          .select('*')
+          .eq('eventId', event.id)
+          .eq('userId', user.id)
+
+        if (error) throw error
+        setWishList(data || [])
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }, [user.id, event.id])
 
   const addItem = async (e: any) => {
     e.preventDefault()
@@ -57,6 +84,8 @@ export const useWishlist = () => {
   }
 
   return {
+    loading,
+    fetchWishList,
     wishList,
     setWishList,
     currentItem,
