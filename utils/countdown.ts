@@ -10,6 +10,6 @@ export function countdown(targetDate: Date) {
 
   return {
     weeks: weeksRemaining,
-    days: daysRemaining % 7,
+    days: (daysRemaining % 7) + 1,
   }
 }
