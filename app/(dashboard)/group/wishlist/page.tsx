@@ -16,7 +16,7 @@ type MetaDataType = {
   ogImage?: string
 }
 
-export default function GroupDashboard() {
+export default function WishList() {
   const [loading, setLoading] = useState(false)
   const [storedWishList, setStoredWishList] = useState<WishListType[] | null>(
     null

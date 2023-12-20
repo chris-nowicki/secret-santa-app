@@ -1,8 +1,10 @@
-const Spinner = () => {
+import { cn } from '@/utils/twMerge'
+
+const Spinner = ({ className }: { className?: string }) => {
   return (
     <div>
       <svg
-        className="h-10 w-10 animate-spin text-white"
+        className={cn('h-10 w-10 animate-spin text-white', className)}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

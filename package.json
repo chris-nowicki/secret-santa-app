@@ -23,7 +23,8 @@
     "react-dom": "^18",
     "react-email": "^1.10.0",
     "react-hot-toast": "^2.4.1",
-    "resend": "^2.1.0-canary.1"
+    "resend": "^2.1.0-canary.1",
+    "tailwind-merge": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

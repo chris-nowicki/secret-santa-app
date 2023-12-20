@@ -9,6 +9,7 @@ import EditEvent from '@/components/EditEvent/EditEvent'
 import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
 import Invites from '@/components/Invites/Invites'
 import EditAccount from '@/components/EditAccount/EditAccount'
+import Spinner from '@/components/Spinner/Spinner'
 
 type UserStatus = {
   status: 'DECLINED' | 'INVITED' | 'ACCEPTED'
@@ -55,7 +56,13 @@ export default function GroupDashboard() {
     }
   }, [statusData])
 
-  if (loading) return
+  if (loading)
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+        <Spinner className="h-44 w-44" />
+        <h1 className="font-handwriting text-3xl text-white">Loading ...</h1>
+      </div>
+    )
 
   return (
     <div className="mt-[90px] flex w-full">
