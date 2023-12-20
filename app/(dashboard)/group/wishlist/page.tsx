@@ -1,13 +1,13 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import { createClient } from '@/utils/supabase/client'
+import { useWishlist } from '@/hooks/useWishlist'
 import { handleWishList } from '@/actions/handleWishList'
+import { createClient } from '@/utils/supabase/client'
 import Aside from '@/components/Aside/Aside'
 import EditAccount from '@/components/EditAccount/EditAccount'
 import WishListField from '@/components/WishListField/WishListField'
 import Loading from '@/components/Spinner/LoadingSpinner'
-import { useWishlist } from '@/hooks/useWishlist'
 
 const supabase = createClient()
 
