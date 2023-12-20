@@ -1,9 +1,7 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { countdown } from '@/utils/countdown'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import { useEffect, useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
-import { QueryData } from '@supabase/supabase-js'
 import InviteGroup from '@/components/InviteGroup/InviteGroup'
 import Icon from '@/components/Icon/Icon'
 import Button from '@/components/Button/Button'
@@ -13,43 +11,12 @@ import EditAccount from '@/components/EditAccount/EditAccount'
 
 export default function GroupInvite() {
   const [loading, setLoading] = useState(true)
-  const { user, event, setEvent, handleAside } = useSecretSanta()
+  const { event, handleAside } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
-  const supabase = createClient()
 
   const handleClick = async () => {
     console.log('clicked')
   }
-
-  const getEvent = async () => {
-    const userStatus = supabase
-      .from('userStatus')
-      .select(`id, status, event(id, name, date, sendReminder)`)
-      .eq('userId', user.id)
-
-    type userStatus = QueryData<typeof userStatus>
-
-    const { data } = await userStatus
-
-    if (data && data[0].event) {
-      const event = data[0].event
-
-      setEvent({
-        // @ts-ignore
-        id: event.id,
-        // @ts-ignore
-        name: event.name,
-        // @ts-ignore
-        date: event.date,
-        // @ts-ignore
-        sendReminder: event.sendReminder,
-      })
-    }
-  }
-
-  useEffect(() => {
-    user.id !== '' && getEvent()
-  }, [user])
 
   useEffect(() => {
     if (event.id !== '') {

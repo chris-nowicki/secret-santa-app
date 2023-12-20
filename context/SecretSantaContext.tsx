@@ -5,8 +5,6 @@ import type {
   SecretSantaContextType,
   InviteType,
   FilteredDataInviteType,
-  EventType,
-  UserType,
 } from '@/types/context.types'
 import { QueryData } from '@supabase/supabase-js'
 
@@ -21,14 +19,19 @@ export const SecretSantaContext = createContext<SecretSantaContextType | null>(
 export const SecretSantaContextProvider = ({
   children,
 }: SecretSantaProviderProps) => {
-  const [user, setUser] = useState({} as UserType)
-  const [showSideMenu, setShowSideMenu] = useState(false)
+  const [user, setUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+    role: '',
+  })
   const [event, setEvent] = useState({
     id: '',
     name: '',
     date: '',
     sendReminder: false,
   })
+  const [showSideMenu, setShowSideMenu] = useState(false)
   const [invites, setInvites] = useState<InviteType[]>([])
   const [filteredInviteData, setFilteredInviteData] =
     useState<FilteredDataInviteType>({
@@ -68,13 +71,14 @@ export const SecretSantaContextProvider = ({
         .eq('id', session.user.id)
 
       if (data) {
-        setUser({
+        setUser((prevUser) => ({
+          ...prevUser,
           id: session.user.id,
           name: data[0].name,
           email: data[0].email,
           avatar: data[0].avatar,
           role: data[0].role,
-        })
+        }))
       }
     }
   }
@@ -151,7 +155,7 @@ export const SecretSantaContextProvider = ({
   useEffect(() => {
     setFilteredInviteData({
       ...filteredInviteData,
-      data: renderFilteredInviteData(),
+      data: renderFilteredInviteData() as never[],
     })
   }, [invites])
 

@@ -1,5 +1,5 @@
 export type SecretSantaContextType = {
-  user: UserType | {}
+  user: UserType
   setUser: React.Dispatch<React.SetStateAction<UserType>>
   showSideMenu: boolean
   setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>
@@ -8,7 +8,7 @@ export type SecretSantaContextType = {
   aside: AsideType
   setAside: React.Dispatch<React.SetStateAction<AsideType>>
   handleAside: (menu: string) => void
-  invites: InviteType[] | []
+  invites: InviteType[]
   setInvites: React.Dispatch<React.SetStateAction<InviteType[]>>
   statusCount: StatusCountType
   setStatusCount: React.Dispatch<React.SetStateAction<StatusCountType>>

@@ -218,3 +218,21 @@
 body {
   overflow-x: hidden;
 }
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+    border-color: #10b981; /* Tailwind green-500 */
+  }
+  50% {
+    border-color: #ef4444; /* Tailwind red-500 */
+  }
+  100% {
+    transform: rotate(360deg);
+    border-color: #10b981; /* Tailwind green-500 */
+  }
+}
+
+.loader {
+  animation: spinner 1.5s linear infinite;
+}
