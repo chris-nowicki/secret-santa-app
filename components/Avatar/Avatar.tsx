@@ -6,7 +6,7 @@ export interface AvatarProps {
   alt?: string
   avatar?: string
   showSantaHat?: boolean
-  indicator: 'ACCEPTED' | 'INVITED' | 'DECLINED'
+  indicator?: 'ACCEPTED' | 'INVITED' | 'DECLINED'
   icon?: string
 }
 
