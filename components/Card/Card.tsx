@@ -3,7 +3,7 @@ import Icon from '../Icon/Icon'
 
 export interface CardProps {
   avatar: AvatarProps
-  handleClose: (event: React.MouseEvent) => void
+  handleClose?: (event: React.MouseEvent) => void
   email: string
   isCloseShowing?: boolean
   name: string
@@ -20,7 +20,7 @@ const Card = ({
     {isCloseShowing && (
       <button
         className="absolute right-2 top-2 text-bombay"
-        onClick={(event) => handleClose(event)}
+        onClick={(event) => handleClose && handleClose(event)}
       >
         <Icon id="close" />
       </button>

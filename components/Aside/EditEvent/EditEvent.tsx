@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Checkbox from '../Checkbox/Checkbox'
+import Checkbox from '../../Checkbox/Checkbox'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { updateEvent } from '@/actions/updateEvent'
 import format from 'date-fns/format'

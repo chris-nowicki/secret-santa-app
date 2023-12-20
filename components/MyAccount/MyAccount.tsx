@@ -68,7 +68,13 @@ const MyAccount = ({ name }: { name: string | null }) => {
                 <div className="text-pastelMagenta">
                   <Icon size={32} id="calendar" />
                 </div>
-                <Link href="/group/invite">My Event</Link>
+                <button
+                  onClick={() => {
+                    toggleDropdown()
+                  }}
+                >
+                  <Link href="/group/invite">My Event</Link>
+                </button>
               </li>
               <li>
                 <div className="text-pastelMagenta">

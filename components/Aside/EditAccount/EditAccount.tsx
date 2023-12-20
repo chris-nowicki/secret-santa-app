@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { updateUser } from '@/actions/updateUser'
-import ShowHidePassword from '../ShowHidePassword/ShowHidePassword'
+import ShowHidePassword from '../../ShowHidePassword/ShowHidePassword'
 
 export default function EditEvent() {
   const { user, setUser, aside, setAside } = useSecretSanta()

@@ -42,11 +42,19 @@ export const SecretSantaContextProvider = ({
     show: false,
     myAccount: false,
     editEvent: false,
+    viewWishList: false,
   })
   const [statusCount, setStatusCount] = useState({
     declined: 0,
     invited: 0,
     accepted: 0,
+  })
+
+  const [attendee, setAttendee] = useState({
+    id: '',
+    name: '',
+    email: '',
+    role: '',
   })
   const supabase = createClient()
 
@@ -80,6 +88,20 @@ export const SecretSantaContextProvider = ({
           role: data[0].role,
         }))
       }
+    }
+  }
+
+  const fetchAttendee = async (id: string) => {
+    const { data } = await supabase.from('profile').select('*').eq('id', id)
+
+    if (data) {
+      setAttendee((prevAttendee) => ({
+        ...prevAttendee,
+        id: data[0].id,
+        name: data[0].name,
+        email: data[0].email,
+        role: data[0].role,
+      }))
     }
   }
 
@@ -164,6 +186,8 @@ export const SecretSantaContextProvider = ({
       value={{
         user,
         setUser,
+        attendee,
+        setAttendee,
         showSideMenu,
         setShowSideMenu,
         event,
@@ -177,6 +201,7 @@ export const SecretSantaContextProvider = ({
         setStatusCount,
         filteredInviteData,
         setFilteredInviteData,
+        fetchAttendee,
       }}
     >
       {children}

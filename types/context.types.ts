@@ -16,6 +16,9 @@ export type SecretSantaContextType = {
   setFilteredInviteData: React.Dispatch<
     React.SetStateAction<FilteredDataInviteType>
   >
+  attendee: AttendeeType
+  setAttendee: React.Dispatch<React.SetStateAction<AttendeeType>>
+  fetchAttendee: (id: string) => void
 }
 
 export type InviteType = {
@@ -59,10 +62,19 @@ export type AsideType = {
   show: boolean
   myAccount: boolean
   editEvent: boolean
+  viewWishList: boolean
 }
 
 export type StatusCountType = {
   accepted: number
   invited: number
   declined: number
+}
+
+export type AttendeeType = {
+  id: string
+  name: string
+  email: string
+  role: string
+  avatar?: string
 }

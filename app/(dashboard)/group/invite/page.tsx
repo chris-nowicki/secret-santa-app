@@ -6,8 +6,8 @@ import InviteGroup from '@/components/InviteGroup/InviteGroup'
 import Icon from '@/components/Icon/Icon'
 import Button from '@/components/Button/Button'
 import Aside from '@/components/Aside/Aside'
-import EditEvent from '@/components/EditEvent/EditEvent'
-import EditAccount from '@/components/EditAccount/EditAccount'
+import EditEvent from '@/components/Aside/EditEvent/EditEvent'
+import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import Loading from '@/components/Spinner/LoadingSpinner'
 
 export default function GroupInvite() {

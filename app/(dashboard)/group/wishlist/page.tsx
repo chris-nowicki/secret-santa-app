@@ -4,7 +4,7 @@ import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useWishlist } from '@/hooks/useWishlist'
 import { handleWishList } from '@/actions/handleWishList'
 import Aside from '@/components/Aside/Aside'
-import EditAccount from '@/components/EditAccount/EditAccount'
+import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import WishListField from '@/components/WishListField/WishListField'
 import Loading from '@/components/Spinner/LoadingSpinner'
 
@@ -14,13 +14,12 @@ export default function WishList() {
     loading,
     fetchWishList,
     wishList,
-    setWishList,
     currentItem,
     setCurrentItem,
     addItem,
     updateItem,
     deleteItem,
-  } = useWishlist({ user, event })
+  } = useWishlist(user.id, event.id)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

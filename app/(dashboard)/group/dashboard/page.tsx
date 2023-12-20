@@ -5,11 +5,12 @@ import { useFetchStatusCount } from '@/hooks/useFetchStatusCount'
 import { countdown } from '@/utils/countdown'
 import { processStatusData } from '@/utils/processStatusData'
 import Aside from '@/components/Aside/Aside'
-import EditEvent from '@/components/EditEvent/EditEvent'
+import EditEvent from '@/components/Aside/EditEvent/EditEvent'
 import RsvpStatus from '@/components/RsvpStatus/RsvpStatus'
 import Invites from '@/components/Invites/Invites'
-import EditAccount from '@/components/EditAccount/EditAccount'
+import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import Loading from '@/components/Spinner/LoadingSpinner'
+import ViewWishList from '@/components/Aside/ViewWishList/ViewWishList'
 
 type UserStatus = {
   status: 'DECLINED' | 'INVITED' | 'ACCEPTED'
@@ -63,6 +64,7 @@ export default function GroupDashboard() {
       <Aside>
         <EditEvent />
         <EditAccount />
+        <ViewWishList />
       </Aside>
       <div className="flex w-full flex-col pr-12">
         <span className="-mb-10 ml-5 font-handwriting text-[31.5px] uppercase text-white">

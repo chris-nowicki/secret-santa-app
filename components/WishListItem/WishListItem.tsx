@@ -1,3 +1,12 @@
+type WishListItemProps = {
+  heading: string
+  number: number
+  url: string
+  siteTitle: string
+  siteDescription: string
+  siteImage: string
+}
+
 const WishListItem = ({
   heading,
   number,
@@ -5,7 +14,7 @@ const WishListItem = ({
   siteTitle,
   siteDescription,
   siteImage,
-}) => {
+}: WishListItemProps) => {
   return (
     <div className="mb-6 flex w-full gap-4 border-b-[3px] border-b-silverTree pb-6 text-white">
       <div className="font-handwriting text-3xl">{number}</div>

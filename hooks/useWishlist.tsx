@@ -10,26 +10,21 @@ type MetaDataType = {
   ogImage?: string
 }
 
-type UseWishListType = {
-  user: UserType
-  event: EventType
-}
-
 const supabase = createClient()
 
-export const useWishlist = ({ user, event }: UseWishListType) => {
+export const useWishlist = (userId: string, eventId: string) => {
   const [wishList, setWishList] = useState([] as WishListType[])
   const [currentItem, setCurrentItem] = useState({ name: '', url: '' })
   const [loading, setLoading] = useState(false)
 
   const fetchWishList = useCallback(async () => {
-    if (user.id && event.id) {
+    if (userId && eventId) {
       try {
         const { data, error } = await supabase
           .from('wishList')
           .select('*')
-          .eq('eventId', event.id)
-          .eq('userId', user.id)
+          .eq('eventId', eventId)
+          .eq('userId', userId)
 
         if (error) throw error
         setWishList(data || [])
@@ -39,7 +34,7 @@ export const useWishlist = ({ user, event }: UseWishListType) => {
         setLoading(false)
       }
     }
-  }, [user.id, event.id])
+  }, [userId, eventId])
 
   const addItem = async (e: any) => {
     e.preventDefault()
@@ -51,8 +46,8 @@ export const useWishlist = ({ user, event }: UseWishListType) => {
       siteImage: metaData.ogImage || '',
       siteTitle: metaData.title || '',
       siteDescription: metaData.description || '',
-      eventId: event.id,
-      userId: user.id,
+      eventId: eventId,
+      userId: userId,
     }
 
     setWishList([...wishList, newItem])
@@ -79,7 +74,7 @@ export const useWishlist = ({ user, event }: UseWishListType) => {
     index: number
   ) => {
     e.preventDefault()
-    const newList = wishList.filter((item, i) => i !== index)
+    const newList = wishList.filter((_, i) => i !== index)
     setWishList(newList)
   }
 
