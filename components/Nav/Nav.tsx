@@ -13,7 +13,7 @@ export default function Nav() {
   return (
     <div
       className={clsx(
-        'l-0 fixed top-0 z-20 h-screen w-[460px] flex-col justify-between bg-supernova px-12 pb-12 pt-[160px]',
+        'l-0 absolute top-0 z-20 h-screen w-[460px] flex-col justify-between bg-supernova px-12 pb-12 pt-[160px]',
         showSideMenu ? 'flex' : 'hidden'
       )}
     >
