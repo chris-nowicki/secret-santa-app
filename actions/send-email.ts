@@ -1,7 +1,7 @@
 'use server'
 import * as React from 'react'
 import { Resend } from 'resend'
-import EmailTemplate from '@/emails/email-template'
+import EmailTemplate from '@/emails/email-invite'
 import format from 'date-fns/format'
 
 const resend = new Resend(process.env.RESEND_API_KEY)

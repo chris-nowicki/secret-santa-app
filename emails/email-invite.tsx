@@ -31,7 +31,7 @@ export default function EmailTemplate(props: EmailTemplateProps) {
             width={800}
             className="absolute left-0 top-0 -z-10 hidden md:block"
           />
-          <div className="sm:mt-0 w-full pl-0 md:mt-[225px] md:w-[425px] md:pl-60">
+          <div className="w-full pl-0 sm:mt-0 md:mt-[225px] md:w-[425px] md:pl-60">
             <Text className="font-sans ">Hey {props.name}!</Text>
             <Text className="font-sans">
               I hope this email sleighs you with joy! `Tis the season to be
