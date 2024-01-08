@@ -11,7 +11,7 @@ import Invites from '@/components/Invites/Invites'
 import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import Loading from '@/components/UI/Spinner/LoadingSpinner'
 import ViewWishList from '@/components/Aside/ViewWishList/ViewWishList'
-import Admin from '@/components/Admin/Admin'
+import Admin from '@/components/Admin'
 
 type UserStatus = {
   status: 'DECLINED' | 'INVITED' | 'ACCEPTED'

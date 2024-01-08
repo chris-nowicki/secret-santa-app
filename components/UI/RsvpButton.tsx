@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 import clsx from 'clsx'
 
 interface RsvpButtonProps {

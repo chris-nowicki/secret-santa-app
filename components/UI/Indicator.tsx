@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 
 interface IndicatorProps {
   status: 'ACCEPTED' | 'INVITED' | 'DECLINED'

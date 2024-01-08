@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 
 export default function Aside({ children }: { children: React.ReactNode }) {
   const { aside, setAside } = useSecretSanta()

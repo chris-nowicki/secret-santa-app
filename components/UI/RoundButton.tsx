@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 
 export interface RoundButtonProps {
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void

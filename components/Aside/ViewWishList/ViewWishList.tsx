@@ -5,7 +5,7 @@ import { useWishlist } from '@/hooks/useWishlist'
 import Card from '@/components/UI/Card'
 import EmptyCard from '@/components/UI/EmptyCard'
 import { extractDomain } from '@/utils/extractDomain'
-import Icon from '@/components/Icon/Icon'
+import Icon from '@/components/Icon'
 import Link from 'next/link'
 
 export default function ViewWishList() {

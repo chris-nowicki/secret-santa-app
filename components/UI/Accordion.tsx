@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 
 type Props = {
   children: React.ReactNode

@@ -1,5 +1,5 @@
-import Card, { type CardProps } from '../UI/Card'
-import EmptyCard from '../UI/EmptyCard'
+import Card, { type CardProps } from './UI/Card'
+import EmptyCard from './UI/EmptyCard'
 
 interface PairingProps {
   secretSanta: CardProps

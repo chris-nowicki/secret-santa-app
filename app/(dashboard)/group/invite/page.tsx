@@ -7,7 +7,7 @@ import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/Aside/EditEvent/EditEvent'
 import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import Loading from '@/components/UI/Spinner/LoadingSpinner'
-import Admin from '@/components/Admin/Admin'
+import Admin from '@/components/Admin'
 import { redirect } from 'next/navigation'
 
 export default function GroupInvite() {

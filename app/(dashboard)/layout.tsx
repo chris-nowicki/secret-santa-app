@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google'
 import { SecretSantaContextProvider } from '@/context/SecretSantaContext'
 import '../globals.css'
 import NavBar from '@/components/NavBar/NavBar'
-import Nav from '@/components/Nav/Nav'
-import Footer from '@/components/Footer/Footer'
+import Nav from '@/components/SideNav/Nav'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 

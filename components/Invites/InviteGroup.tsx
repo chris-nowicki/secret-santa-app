@@ -1,7 +1,7 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { createClient } from '@/utils/supabase/client'
 import { sendInvite } from '@/actions/sendInvite'
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 import Invites from './Invites'
 
 export default function InviteGroup() {

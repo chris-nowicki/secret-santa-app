@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { createClient } from '@/utils/supabase/client'
-import Avatar from '../UI/Avatar'
-import Icon from '../Icon/Icon'
+import Avatar from './UI/Avatar'
+import Icon from './Icon'
 import Link from 'next/link'
 
 const MyAccount = ({ name }: { name: string | null }) => {

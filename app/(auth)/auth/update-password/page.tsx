@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
+import HeaderWithRulers from '@/components/HeaderWithRulers'
 
 export default async function Home() {
   const handleSignUp = async (formData: FormData) => {

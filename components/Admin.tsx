@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Icon from '../Icon/Icon'
-import Button from '../UI/Button'
+import Icon from './Icon'
+import Button from './UI/Button'
 import Link from 'next/link'
 
 export default function Admin() {

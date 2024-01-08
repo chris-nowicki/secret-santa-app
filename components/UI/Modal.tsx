@@ -1,5 +1,5 @@
-import Icon from '../Icon/Icon'
-import Overlay from '../Overlay/Overlay'
+import Icon from '../Icon'
+import Overlay from './Overlay'
 
 interface ModalProps {
   children: JSX.Element

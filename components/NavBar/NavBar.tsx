@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Hamburger from '../UI/Hamburger'
-import MyAccount from '../MyAccount/MyAccount'
+import MyAccount from '../MyAccount'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 
 export default function NavBar() {

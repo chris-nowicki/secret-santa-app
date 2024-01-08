@@ -1,6 +1,6 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import Button from './UI/Button'
-import Icon from './Icon/Icon'
+import Icon from './Icon'
 import clsx from 'clsx'
 
 interface RsvpStatusProps {

@@ -1,6 +1,6 @@
 'use client'
 import { createClient } from '@/utils/supabase/client'
-import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
+import HeaderWithRulers from '@/components/HeaderWithRulers'
 import ShowHidePassword from '@/components/ShowHidePassword'
 import Upload from '@/components/Upload'
 import { redirect } from 'next/navigation'

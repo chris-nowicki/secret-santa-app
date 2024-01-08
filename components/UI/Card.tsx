@@ -1,5 +1,5 @@
 import Avatar, { type AvatarProps } from './Avatar'
-import Icon from '../Icon/Icon'
+import Icon from '../Icon'
 
 export interface CardProps {
   avatar: AvatarProps
