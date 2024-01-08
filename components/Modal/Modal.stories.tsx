@@ -12,7 +12,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Card from '../Card/Card'
+import Card from '../UI/Card'
 
 import Modal from './Modal'
 

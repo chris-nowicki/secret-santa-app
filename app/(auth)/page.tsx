@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
-import ShowHidePassword from '@/components/ShowHidePassword/ShowHidePassword'
+import ShowHidePassword from '@/components/ShowHidePassword'
 
 export default async function Home() {
   const supabase = createClient(cookies())
@@ -34,6 +34,8 @@ export default async function Home() {
   return (
     <div className="flex w-full flex-col">
       <HeaderWithRulers className="mb-8 text-white" heading="LOGIN" />
+
+      {/* login form */}
       <form action={handleSignIn} className="flex flex-col gap-4">
         <input type="text" name="email" placeholder="Email" tabIndex={1} />
         <ShowHidePassword name="password" tabIndex={2} />
@@ -41,6 +43,8 @@ export default async function Home() {
           Login
         </button>
       </form>
+
+      {/* links to sign-up or password reset */}
       <Link
         href="/signup"
         className="mt-4 text-center text-xl underline"

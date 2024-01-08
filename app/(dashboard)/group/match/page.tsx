@@ -7,11 +7,12 @@ import { processStatusData } from '@/utils/processStatusData'
 import Aside from '@/components/Aside/Aside'
 import EditEvent from '@/components/Aside/EditEvent/EditEvent'
 import RsvpStatus from '@/components/RsvpStatus'
-import Invites from '@/components/Invites/Invites'
 import EditAccount from '@/components/Aside/EditAccount/EditAccount'
 import Loading from '@/components/UI/Spinner/LoadingSpinner'
 import ViewWishList from '@/components/Aside/ViewWishList/ViewWishList'
 import Admin from '@/components/Admin/Admin'
+import Card from '@/components/UI/Card'
+import EmptyCard from '@/components/UI/EmptyCard'
 
 type UserStatus = {
   status: 'DECLINED' | 'INVITED' | 'ACCEPTED'
@@ -19,8 +20,14 @@ type UserStatus = {
 
 export default function GroupDashboard() {
   const [loading, setLoading] = useState(true)
-  const { event, statusCount, setStatusCount, filteredInviteData } =
-    useSecretSanta()
+  const {
+    user,
+    event,
+    statusCount,
+    setStatusCount,
+    filteredInviteData,
+    invites,
+  } = useSecretSanta()
   const { weeks, days } = countdown(new Date(event?.date))
   const { data: statusData, error } = useFetchStatusCount(event?.id ?? '')
 
@@ -51,6 +58,7 @@ export default function GroupDashboard() {
   )
 
   useEffect(() => {
+    console.log('statusData', statusData)
     if (statusData) {
       const updatedStatusCount = processStatusData(statusData as UserStatus[])
       setStatusCount({ ...statusCount, ...updatedStatusCount })
@@ -58,6 +66,13 @@ export default function GroupDashboard() {
     }
   }, [statusData])
 
+  useEffect(() => {
+    if (statusCount.invited === 0) {
+      console.log('everyone has RSVPd')
+    }
+  }, [statusCount])
+
+  if (user.role !== 'ADMIN') return
   if (loading) return <Loading />
 
   return (
@@ -77,29 +92,40 @@ export default function GroupDashboard() {
           </h1>
           <Admin />
         </div>
-
-        {/* RSVP status buttons */}
-        <div className="mb-20 mt-8 flex w-full items-center gap-20 pl-5">
-          {renderRsvpStatus(
-            'declined',
-            'error',
-            statusCount.declined,
-            'DECLINED'
-          )}
-          {renderRsvpStatus(
-            'pending',
-            'warning',
-            statusCount.invited,
-            'INVITED'
-          )}
-          {renderRsvpStatus(
-            'accepted',
-            'success',
-            statusCount.accepted,
-            'ACCEPTED'
-          )}
+        {/* sort through for accepted invites */}
+        <div className="mb-20 flex max-w-[1440px] flex-wrap items-center gap-4">
+          {invites
+            .filter((invite) => invite.status === 'ACCEPTED')
+            .map(
+              (invite, index) =>
+                invite.status === 'ACCEPTED' && (
+                  <>
+                    <div key={index} className="flex w-[416px]">
+                      <Card
+                        key={invite.id}
+                        avatar={{
+                          alt: 'Avatar',
+                          avatar: invite ? invite.profile.avatar : '',
+                          letter: invite
+                            ? invite.profile.name[0].substring(0, 1)
+                            : '',
+                          showSantaHat: index <= 2 ? true : false,
+                        }}
+                        // @ts-ignore
+                        email={invite ? invite.profile.email : ''}
+                        // @ts-ignore
+                        name={invite ? invite.profile.name : ''}
+                        isCloseShowing={false}
+                      />
+                    </div>
+                    <div className="h-2.5 w-[44px] bg-supernova"></div>
+                    <div className="w-[416px]">
+                      <EmptyCard />
+                    </div>
+                  </>
+                )
+            )}
         </div>
-        <Invites isCloseShowing={false} />
       </div>
     </div>
   )

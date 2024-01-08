@@ -1,4 +1,4 @@
-import Card, { type CardProps } from '../Card/Card'
+import Card, { type CardProps } from './UI/Card'
 
 interface ThankYouFormProps {
   card: CardProps

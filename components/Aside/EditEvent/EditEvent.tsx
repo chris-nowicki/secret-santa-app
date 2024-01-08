@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Checkbox from '../../Checkbox/Checkbox'
+import Checkbox from '../../UI/Checkbox'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { updateEvent } from '@/actions/updateEvent'
 import format from 'date-fns/format'
@@ -34,6 +34,10 @@ export default function EditEvent() {
       sendReminder: event.sendReminder,
     })
   }, [event])
+
+  useEffect(() => {
+    document.body.classList.add('no-scroll')
+  }, [])
 
   return (
     <>

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
-import RsvpButton from '@/components/RsvpButton/RsvpButton'
+import RsvpButton from '@/components/UI/RsvpButton'
 import format from 'date-fns/format'
 import { useRouter } from 'next/navigation'
 

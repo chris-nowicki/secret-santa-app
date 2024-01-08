@@ -2,8 +2,8 @@
 import { useEffect } from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import { useWishlist } from '@/hooks/useWishlist'
-import Card from '@/components/Card/Card'
-import EmptyCard from '@/components/EmptyCard/EmptyCard'
+import Card from '@/components/UI/Card'
+import EmptyCard from '@/components/UI/EmptyCard'
 import { extractDomain } from '@/utils/extractDomain'
 import Icon from '@/components/Icon/Icon'
 import Link from 'next/link'
@@ -21,6 +21,7 @@ export default function ViewWishList() {
 
   useEffect(() => {
     fetchWishList()
+    document.body.classList.add('no-scroll')
   }, [fetchWishList])
 
   return (
@@ -33,13 +34,14 @@ export default function ViewWishList() {
             </h1>
             {user.id === attendee.id && (
               <button
-                onClick={() =>
+                onClick={() => {
+                  document.body.classList.remove('no-scroll')
                   setAside({
                     ...aside,
                     show: false,
                     viewWishList: false,
                   })
-                }
+                }}
                 className="w-[112px] gap-2 rounded-full bg-supernova py-2 font-sans text-sm font-bold uppercase"
               >
                 <Link

@@ -1,5 +1,5 @@
 import Icon from '../Icon/Icon'
-import Indicator from '../Indicator/Indicator'
+import Indicator from './Indicator'
 
 export interface AvatarProps {
   letter?: string

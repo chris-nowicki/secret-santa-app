@@ -1,4 +1,4 @@
-import RoundButton, { RoundButtonProps } from '../RoundButton/RoundButton'
+import RoundButton, { RoundButtonProps } from '../UI/RoundButton'
 
 interface WishListFieldProps {
   roundButton: RoundButtonProps

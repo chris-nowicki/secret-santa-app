@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import Icon from '../Icon/Icon'
+import Icon from './Icon/Icon'
 import clsx from 'clsx'
 
 const ShowHidePassword = ({

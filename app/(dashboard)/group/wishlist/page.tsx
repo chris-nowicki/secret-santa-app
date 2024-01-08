@@ -5,8 +5,8 @@ import { useWishlist } from '@/hooks/useWishlist'
 import { handleWishList } from '@/actions/handleWishList'
 import Aside from '@/components/Aside/Aside'
 import EditAccount from '@/components/Aside/EditAccount/EditAccount'
-import WishListField from '@/components/WishListField/WishListField'
-import Loading from '@/components/Spinner/LoadingSpinner'
+import WishListField from '@/components/WishList/WishListField'
+import Loading from '@/components/UI/Spinner/LoadingSpinner'
 
 export default function WishList() {
   const { user, event } = useSecretSanta()

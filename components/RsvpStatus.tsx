@@ -1,6 +1,6 @@
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Button from '../Button/Button'
-import Icon from '../Icon/Icon'
+import Button from './UI/Button'
+import Icon from './Icon/Icon'
 import clsx from 'clsx'
 
 interface RsvpStatusProps {
@@ -50,7 +50,7 @@ const RsvpStatus = ({
   return (
     <div
       className={clsx(
-        ' h-[120px] w-full  border-[6px] border-white',
+        ' flex h-[120px]  w-full border-[6px] border-white',
         disabled ? 'opacity-50' : '',
         status === 'success'
           ? 'bg-spanishGreen'
@@ -60,9 +60,10 @@ const RsvpStatus = ({
       )}
     >
       <div className="flex">
+        {/* number for status count */}
         <div
           className={clsx(
-            'relative  -left-8 -top-16 z-10',
+            'relative -left-8 -top-16 z-10',
             status === 'success'
               ? 'text-spanishGreen'
               : status === 'warning'
@@ -77,16 +78,17 @@ const RsvpStatus = ({
             {count}
           </div>
         </div>
+
         <div
           className={clsx(
-            'relative flex w-full items-center font-handwriting text-4xl text-white'
+            'relative flex w-full justify-center font-handwriting text-4xl text-white'
           )}
         >
           {clearFilter?.isShowing && (
             <Button
               size="small"
               handleClick={resetFilter}
-              className={`absolute -top-4 left-6 z-30 whitespace-nowrap ${
+              className={`absolute -top-4 z-30 whitespace-nowrap ${
                 status === 'success' ? 'bg-countyGreen' : ''
               } ${status === 'warning' ? 'bg-spicyMustard text-white' : ''} ${
                 status === 'error' ? 'bg-cognac' : ''
@@ -99,7 +101,6 @@ const RsvpStatus = ({
             </Button>
           )}
           <button
-            className="flex w-full"
             onClick={() =>
               handleFilter(
                 heading === 'pending' ? 'INVITED' : heading.toUpperCase()

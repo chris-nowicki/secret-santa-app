@@ -1,4 +1,4 @@
-import Avatar, { type AvatarProps } from '../Avatar/Avatar'
+import Avatar, { type AvatarProps } from './Avatar'
 import Icon from '../Icon/Icon'
 
 export interface CardProps {

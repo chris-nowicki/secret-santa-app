@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Card from '../Card/Card'
+import Card from '../UI/Card'
 import { InviteType } from '@/types/context.types'
 import { usePathname } from 'next/navigation'
 

@@ -1,6 +1,6 @@
 'use client'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
-import Checkbox from '@/components/Checkbox/Checkbox'
+import Checkbox from '@/components/UI/Checkbox'
 import { createNewEvent } from '@/actions/createNewEvent'
 import { redirect } from 'next/navigation'
 

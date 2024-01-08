@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useSecretSanta } from '@/context/SecretSantaContext'
-import Avatar from '../Avatar/Avatar'
-import Icon from '../Icon/Icon'
 import { createClient } from '@/utils/supabase/client'
+import Avatar from '../UI/Avatar'
+import Icon from '../Icon/Icon'
 import Link from 'next/link'
 
 const MyAccount = ({ name }: { name: string | null }) => {
@@ -59,6 +59,7 @@ const MyAccount = ({ name }: { name: string | null }) => {
                   onClick={() => {
                     handleAside('myAccount')
                     toggleDropdown()
+                    document.body.classList.add('no-scroll')
                   }}
                 >
                   My Account
@@ -68,11 +69,7 @@ const MyAccount = ({ name }: { name: string | null }) => {
                 <div className="text-pastelMagenta">
                   <Icon size={32} id="calendar" />
                 </div>
-                <button
-                  onClick={() => {
-                    toggleDropdown()
-                  }}
-                >
+                <button onClick={() => toggleDropdown()}>
                   <Link href="/group/invite">My Event</Link>
                 </button>
               </li>

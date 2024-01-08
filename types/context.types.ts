@@ -23,18 +23,12 @@ export type SecretSantaContextType = {
 
 export type InviteType = {
   id: string
-  name: string
-  email: string
-  avatar?: string
-  role: string
   status: string
-  createdAt?: string
-  updatedAt?: string
-  event: {
-    id: string
+  profile: {
     name: string
-    date: string
-    sendReminder: boolean
+    email: string
+    avatar?: string
+    role: string
   }
 }
 

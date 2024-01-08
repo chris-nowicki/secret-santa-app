@@ -161,12 +161,13 @@ export const SecretSantaContextProvider = ({
     if (event && event.id !== '') {
       const fetchInvites = async () => {
         const { data } = await supabase
-          .from('invite')
-          .select('*')
+          .from('userStatus')
+          .select('id, status, profile(id, name, email, avatar, role)')
           .eq('eventId', event.id)
 
         if (data) {
-          setInvites(data)
+          console.log(data)
+          setInvites(invites)
         }
       }
 

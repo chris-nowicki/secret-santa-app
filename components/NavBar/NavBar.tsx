@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import Hamburger from '../Hamburger/Hamburger'
+import Hamburger from '../UI/Hamburger'
 import MyAccount from '../MyAccount/MyAccount'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 
@@ -10,6 +10,7 @@ export default function NavBar() {
 
   const handleCLick = () => {
     setShowSideMenu((prevState) => !prevState)
+    document.body.classList.toggle('no-scroll')
   }
 
   useEffect(() => {

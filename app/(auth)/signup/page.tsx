@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import HeaderWithRulers from '@/components/HeaderWithRulers/HeaderWithRulers'
-import ShowHidePassword from '@/components/ShowHidePassword/ShowHidePassword'
+import ShowHidePassword from '@/components/ShowHidePassword'
 
 export default async function Home() {
   const supabase = createClient(cookies())
