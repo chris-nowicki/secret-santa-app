@@ -214,7 +214,3 @@
     @apply text-black;
   }
 }
-
-.no-scroll {
-  overflow: hidden;
-}

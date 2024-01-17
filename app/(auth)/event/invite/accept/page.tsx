@@ -1,13 +1,14 @@
-'use client'
-import { createClient } from '@/utils/supabase/client'
 import HeaderWithRulers from '@/components/HeaderWithRulers'
 import ShowHidePassword from '@/components/ShowHidePassword'
 import Upload from '@/components/Upload'
 import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
+
+const cookieStore = cookies()
+const supabase = createClient(cookieStore)
 
 export default function NewEvent() {
-  const supabase = createClient()
-
   const handleSubmit = async (formData: FormData) => {
     const password: string = formData.get('password') as string
 

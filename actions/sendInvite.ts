@@ -1,6 +1,7 @@
 'use server'
 import { createClient } from '@supabase/supabase-js'
-import { sendEmail } from './send-email'
+import { sendEmailInvite } from './send-email'
+import EmailTemplate from '@/emails/email-invite'
 
 type EmailDataType = {
   author: string
@@ -62,14 +63,16 @@ export const sendInvite = async (
     // Create tokenized link
     const link = `${location}/auth/confirm?token_hash=${data.properties.hashed_token}&type=invite&next=/event/invite/confirm`
 
-    sendEmail(
+    sendEmailInvite(
       // @ts-ignore
       email,
+      `Jingle all the way! You're invited to a Secret Santa Celebration`,
       name,
       link,
       emailData.author,
       emailData.eventName,
-      emailData.eventDate
+      emailData.eventDate,
+      EmailTemplate
     )
 
     return {

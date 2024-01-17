@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/client'
 import { useEffect } from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import RealtimeInvites from './RealtimeInvites'
-import { InviteType } from '@/types/context.types'
+import { InviteType } from '@/types/types'
 
 export default function Invites({ isCloseShowing = false }) {
   const supabase = createClient()

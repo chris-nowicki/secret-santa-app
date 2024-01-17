@@ -19,7 +19,7 @@ export default function Nav() {
             <Link href="/group/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link href="/group/invite">Our Group</Link>
+            <Link href="/group?eid=asdjf;asdkl;fjasd/dashboard">Our Group</Link>
           </li>
           <li>
             <Link href="/group/wishlist">My Wish List</Link>

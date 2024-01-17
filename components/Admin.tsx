@@ -1,14 +1,20 @@
-import React from 'react'
 import { useSecretSanta } from '@/context/SecretSantaContext'
 import Icon from './Icon'
 import Button from './UI/Button'
-import Link from 'next/link'
+import { matchUsers } from '@/actions/matchUsers'
+import { useRouter } from 'next/navigation'
 
 export default function Admin() {
-  const { user, handleAside } = useSecretSanta()
+  const { user, event, handleAside } = useSecretSanta()
+  const router = useRouter()
 
-  const handleClick = () => {
-    console.log('clicked')
+  const handleMatch = async () => {
+    'server-only'
+    const data = await matchUsers(event.id)
+    if (data) {
+      console.log(data)
+      router.push('/group/match')
+    }
   }
 
   if (user.role !== 'ADMIN') return
@@ -23,8 +29,8 @@ export default function Admin() {
       >
         <Icon id="pencil" size={24} />
       </button>
-      <Button size="medium" handleClick={handleClick} className="bg-supernova">
-        <Link href="/group/match">match</Link>
+      <Button size="medium" handleClick={handleMatch} className="bg-supernova">
+        match
       </Button>
     </div>
   )

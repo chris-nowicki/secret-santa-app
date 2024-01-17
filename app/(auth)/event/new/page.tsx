@@ -1,4 +1,3 @@
-'use client'
 import HeaderWithRulers from '@/components/HeaderWithRulers'
 import Checkbox from '@/components/UI/Checkbox'
 import { createNewEvent } from '@/actions/createNewEvent'

@@ -1,18 +1,19 @@
 'use server'
 import * as React from 'react'
 import { Resend } from 'resend'
-import EmailTemplate from '@/emails/email-invite'
-import format from 'date-fns/format'
+import { format } from 'date-fns/format'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export const sendEmail = async (
+export const sendEmailInvite = async (
   email: string,
+  subject: string,
   name: string,
   link: string,
   author: string,
   eventName: string,
-  eventDate: string
+  eventDate: string,
+  template: JSX.Element
 ) => {
   if (
     name === undefined ||
@@ -20,7 +21,8 @@ export const sendEmail = async (
     email === undefined ||
     author === undefined ||
     eventName === undefined ||
-    eventDate === undefined
+    eventDate === undefined ||
+    template === undefined
   ) {
     throw new Error('Name or link is undefined')
   }
@@ -31,8 +33,8 @@ export const sendEmail = async (
     data = await resend.emails.send({
       from: 'Secret Santa App <secretsanta@chrisnowicki.io>',
       to: 'chris@chrisnowicki.io',
-      subject: `Jingle all the way! You're invited to a Secret Santa Celebration`,
-      react: React.createElement(EmailTemplate, {
+      subject: subject,
+      react: React.createElement(template, {
         name: name,
         link: link,
         eventName: eventName,
